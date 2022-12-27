@@ -1,0 +1,66 @@
+import { createRouter, createWebHistory, Router, RouteRecordRaw } from 'vue-router';
+import index from '../pages/index.vue';
+import article from "../pages/article.vue";
+import resume from '../pages/resume.vue';
+import message from '../pages/message.vue';
+import mood from '../pages/mood.vue';
+
+
+const routes: RouteRecordRaw[] = [
+    {
+        path: "/:pathMatch(.*)*",
+        name: "not found",
+        redirect: '/'
+    },
+    {
+        path: "/",
+        component: index,
+        meta: {
+            icon: 'bi bi-house-fill',
+            title: '首页',
+            show: true
+        }
+    },{
+        path: "/article/:articleFileId",
+        component: article,
+        meta: {
+            icon: 'bi bi-house-fill',
+            title: '文章',
+            show: false
+        }
+    },
+    {
+        path: "/mood",
+        component: mood,
+        meta: {
+            icon: 'bi bi-emoji-sunglasses-fill',
+            title: '动态',
+            show: true
+        }
+    },
+    {
+        path: "/message",
+        component: message,
+        meta: {
+            icon: 'bi bi-chat-dots-fill',
+            title: '留言',
+            show: true
+        }
+    },
+    {
+        path: "/resume",
+        component: resume,
+        meta: {
+            icon: 'bi bi-file-person-fill',
+            title: '简历',
+            show: true
+        }
+    }
+];
+
+const router: Router = createRouter({
+    routes,
+    history: createWebHistory(),
+});
+
+export default router;
