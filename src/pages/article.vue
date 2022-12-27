@@ -4,46 +4,46 @@
             <div class="row m-0">
                 <div class="col-12 shadow-sm py-3 rounded position-relative overflow-hidden">
                     <glass-vue class="m-0"></glass-vue>
-                    <p v-html="state.articleHtml"></p>
-                    <footer-card-vue :="page.article.footerCard"></footer-card-vue>
-                </div>
-                <div class="col-12 p-0 mt-2">
-                    <div class="row gx-2 justify-content-center">
-                        <div class="col" :class="{ 'd-none': !state.preArticle }">
-                            <article-link-vue
-                                class="shadow-sm p-2 rounded d-flex align-items-center position-relative overflow-hidden btn btn-outline-light border-0"
-                                :article-title="state.preArticle?.articleTitle"
-                                :article-file-id="state.preArticle?.articleFileId">
-                                <template #prepend>
-                                    <glass-vue></glass-vue>
-                                    <div class="flex-fill ps-2 d-flex justify-content-between align-items-end">
-                                        <i class="bi bi-chevron-double-left"></i>
-                                    </div>
-                                </template>
-                                <template #append>
-                                    <div class="ps-2 d-flex justify-content-between align-items-end">
-                                        <small class="text-truncate text-muted">{{ state.preArticle?.articleBrief }}</small>
-                                    </div>
-                                </template>
-                            </article-link-vue>
-                        </div>
-                        <div class="col" :class="{ 'd-none': !state.nextArticle }">
-                            <article-link-vue
-                                class="shadow-sm p-2 rounded d-flex align-items-center position-relative overflow-hidden btn btn-outline-light border-0"
-                                :article-title="state.nextArticle?.articleTitle"
-                                :article-file-id="state.nextArticle?.articleFileId">
-                                <template #prepend>
-                                    <glass-vue></glass-vue>
-                                </template>
-                                <template #append>
-                                    <div class="flex-fill ps-2 d-flex justify-content-between align-items-end">
-                                        <small class="text-truncate text-muted">{{ state.nextArticle?.articleBrief }}</small>
-                                        <i class="bi bi-chevron-double-right"></i>
-                                    </div>
-                                </template>
-                            </article-link-vue>
+                    <div class="markdown-body p-3" v-html="state.articleHtml"></div>
+                    <div class="col-12 p-0 mt-5">
+                        <div class="row gx-2 justify-content-center">
+                            <div class="col" :class="{ 'd-none': !state.preArticle }">
+                                <article-link-vue
+                                    class="shadow-sm p-2 rounded d-flex align-items-center position-relative overflow-hidden btn btn-outline-light border-0"
+                                    :article-title="state.preArticle?.articleTitle"
+                                    :article-file-id="state.preArticle?.articleFileId">
+                                    <template #prepend>
+                                        <glass-vue></glass-vue>
+                                        <div class="flex-fill ps-2 d-flex justify-content-between align-items-end">
+                                            <i class="bi bi-chevron-double-left"></i>
+                                        </div>
+                                    </template>
+                                    <template #append>
+                                        <div class="ps-2 d-flex justify-content-between align-items-end">
+                                            <small class="text-truncate text-muted">{{ state.preArticle?.articleBrief }}</small>
+                                        </div>
+                                    </template>
+                                </article-link-vue>
+                            </div>
+                            <div class="col" :class="{ 'd-none': !state.nextArticle }">
+                                <article-link-vue
+                                    class="shadow-sm p-2 rounded d-flex align-items-center position-relative overflow-hidden btn btn-outline-light border-0"
+                                    :article-title="state.nextArticle?.articleTitle"
+                                    :article-file-id="state.nextArticle?.articleFileId">
+                                    <template #prepend>
+                                        <glass-vue></glass-vue>
+                                    </template>
+                                    <template #append>
+                                        <div class="flex-fill ps-2 d-flex justify-content-between align-items-end">
+                                            <small class="text-truncate text-muted">{{ state.nextArticle?.articleBrief }}</small>
+                                            <i class="bi bi-chevron-double-right"></i>
+                                        </div>
+                                    </template>
+                                </article-link-vue>
+                            </div>
                         </div>
                     </div>
+                    <footer-card-vue class="mt-2" :="page.article.footerCard"></footer-card-vue>
                 </div>
             </div>
         </div>
@@ -51,6 +51,7 @@
 </template>
 
 <script setup lang="ts">
+import '../css/mweb-smartblue.css';
 import glassVue from '../components/basic/glass.vue';
 import ArticleLinkVue from '../components/basic/articleLink.vue';
 import FooterCardVue from '../components/basic/footerCard.vue';

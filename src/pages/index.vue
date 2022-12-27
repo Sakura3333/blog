@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-fill overflow-x-hidden">
+    <div class="flex-fill overflow-x-hidden w-100">
         <div class="container">
             <div class="row gy-2 m-0" v-if="globalState.articleInfoList">
                 <template v-for="articleInfo in globalState.articleInfoList">

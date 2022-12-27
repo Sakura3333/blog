@@ -21,7 +21,7 @@
             <aside-vue></aside-vue>
         </template>
     </defalut-layout-vue>
-    <div class="start-0 bottom-0 w-100">
+    <!-- <div class="start-0 bottom-0 w-100">
         <div class="container">
             <div class="row">
                 <div class="col py-2 text-dark text-center position-relative">
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </template>
 
 <script lang="ts" setup>

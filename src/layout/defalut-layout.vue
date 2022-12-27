@@ -26,6 +26,9 @@
 #website-container {
     height: 100vh;
 }
+#main {
+    max-width: calc(100% - 26rem);
+}
 #header, .header {
     min-width: 10rem;
     max-width: 10rem;
