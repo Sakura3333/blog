@@ -6,8 +6,6 @@
     </a>
 </template>
 <script setup lang="ts">
-import { inject } from 'vue';
-import { ArticleInfo, GlobalState } from '../../model/model';
 import { Router, useRouter } from 'vue-router';
 const props = withDefaults(defineProps<{
     articleTitle: string,
@@ -19,15 +17,10 @@ const props = withDefaults(defineProps<{
     customClass: ""
 });
 
-const globalState: GlobalState = (inject('globalState') as GlobalState);
-const articleInfoList: ArticleInfo[] = globalState.articleInfoList;
 const router: Router = useRouter();
 
 const gotoArticle = () => {
     router.push(`/article/${props.articleFileId}`);
-    let articleInfo: ArticleInfo = (articleInfoList.find(articleInfo => articleInfo.articleFileId === props.articleFileId) as ArticleInfo);
-    globalState.articleInfo = articleInfo;
-    globalState.title = articleInfo.articleTitle;
 }
 
 </script>

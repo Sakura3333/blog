@@ -1,15 +1,15 @@
 <template>
-    <div class="flex-fill overflow-x-hidden">
-        <div class="container">
-            <div class="row gy-2 m-0">
-                <template v-for="moodInfo in state.moodInfoList">
-                    <div class="col bg-transparent card p-2 rounded shadow-sm border-0 position-relative">
-                        <glass-vue></glass-vue>
-                        <div class="card-body">
+    <div class="overflow-x-hidden position-relative mt-1 shadow-sm" style="min-height: calc(100% - 4.25rem); height: auto;">
+        <glass-vue></glass-vue>
+        <div class="container p-0">
+            <div class="row m-0">
+                <template v-for="moodInfo, i in state.moodInfoList">
+                    <div class="col-12 bg-transparent card border-0">
+                        <div class="card-body" :class="{'border-bottom': i != state.moodInfoList.length-1}">
                             <div class="mb-2"><small>{{ moodInfo.moodCreateTime }}</small></div>
-                            <p class="card-text" v-html="moodInfo.moodContentHtml"></p>
-                            <div class="d-flex flex-nowrap overflow-auto py-1" style="height: 10rem;">
-                                <template v-for="moodImageURL in moodInfo.moodImageURLList">
+                            <div class="markdown-body" v-html="moodInfo.moodContentHtml"></div>
+                            <div class="d-flex flex-nowrap overflow-auto py-1" style="max-height: 10rem;" v-if="moodInfo.moodImages.length > 0">
+                                <template v-for="moodImageURL in moodInfo.moodImages">
                                     <img :src="moodImageURL" class="img-fluid rounded mx-1" alt="">
                                 </template>
                             </div>
@@ -22,6 +22,7 @@
 </template>
 
 <script setup lang="ts">
+import '../css/mweb-smartblue.css';
 import glassVue from '../components/basic/glass.vue';
 import { reactive, getCurrentInstance } from 'vue';
 import { MoodInfo } from '../model/model';
@@ -36,12 +37,6 @@ const state = reactive<{
 getMoodInfoList((data: any) => {
     state.moodInfoList = data;
     state.moodInfoList.forEach(moodInfo => {
-        moodInfo.moodImageURLList = [];
-        moodInfo.moodImages.forEach(moodImage => {
-            getFileBlob(moodImage, (data: any) => {
-                moodInfo.moodImageURLList.push(URL.createObjectURL(data));
-            });
-        });
         getMoodByFileId(moodInfo.moodFileId, (data: any) => {
             moodInfo.moodContentHtml = proxy?.marked.parse(data);
         });

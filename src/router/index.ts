@@ -4,15 +4,15 @@ import article from "../pages/article.vue";
 import resume from '../pages/resume.vue';
 import message from '../pages/message.vue';
 import mood from '../pages/mood.vue';
-
+import filing from '../pages/filing.vue';
+import search from '../pages/search.vue';
 
 const routes: RouteRecordRaw[] = [
     {
         path: "/:pathMatch(.*)*",
         name: "not found",
         redirect: '/'
-    },
-    {
+    },{
         path: "/",
         component: index,
         meta: {
@@ -28,8 +28,7 @@ const routes: RouteRecordRaw[] = [
             title: '文章',
             show: false
         }
-    },
-    {
+    },{
         path: "/mood",
         component: mood,
         meta: {
@@ -37,8 +36,7 @@ const routes: RouteRecordRaw[] = [
             title: '动态',
             show: true
         }
-    },
-    {
+    },{
         path: "/message",
         component: message,
         meta: {
@@ -46,13 +44,28 @@ const routes: RouteRecordRaw[] = [
             title: '留言',
             show: true
         }
-    },
-    {
+    },{
+        path: "/filing",
+        component: filing,
+        meta: {
+            icon: 'bi bi-book-fill',
+            title: '归档',
+            show: true
+        }
+    },{
         path: "/resume",
         component: resume,
         meta: {
             icon: 'bi bi-file-person-fill',
             title: '简历',
+            show: true
+        }
+    },{
+        path: "/search",
+        component: search,
+        meta: {
+            icon: 'bi bi-search',
+            title: '搜索',
             show: true
         }
     }

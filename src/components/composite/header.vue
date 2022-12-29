@@ -1,47 +1,48 @@
 <template>
-    <div class="shadow-sm bg-gradient d-flex flex-column justify-content-between position-relative">
-        <glass-vue></glass-vue>
-        <div class="p-4 position-relative">
-            <a href="#" class="d-block text-center">
-                <img class="head-portrait shadow-sm border rounded-circle"
-                    src="https://huyaimg.msstatic.com/avatar/1086/bf/fd6f69d69c0015eaface1f6024869e_180_135.jpg?1619540458&463812"
-                    alt="">
-            </a>
-            <small class="d-block text-center mt-2"><i class="bi bi-journal-bookmark-fill me-2"></i>{{ articleCount }}</small>
-            <div class=""></div>
-            <div class="d-flex align-items-center justify-content-center start-0 bottom-0">
-                <a href="https://github.com/Sakura3333" target="_blank" class="bi bi-github text-black fs-5 mx-1"></a>
-                <a href="https://space.bilibili.com/74980245" target="_blank"><img style="width: 1.3rem;height: 1.3rem"
-                        src="https://www.bilibili.com/favicon.ico?v=1" class="mx-1" alt=""></a>
-            </div>
-        </div>
-        <div class="flex-fill px-1 pb-5 overflow-auto">
-            <div class="container position-relative">
-                <div class="row gy-1">
-                    <template v-for="route in routes">
-                        <div class="col-12" v-if="route.meta.show">
-                            <router-link :to="route.path"
-                                class="d-block text-center text-dark p-2 rounded-pill text-decoration-none fw-bold">
-                                <i :class="route.meta.icon"></i>
+    <nav class="position-ssm-fixed h-100 top-0" style="min-width: 5rem; transition: .3s;" :style="{'left': !show ? '-5rem' : '0'}">
+        <div class="container-fluid h-100 position-relative p-0 d-flex flex-column align-items-center">
+            <glass-vue></glass-vue>
+            <img :src="logo" alt="" style="width: 3.5rem; height: 3.5rem;">
+            <div class="w-100 p-2 d-md-flex flex-md-column">
+                <template v-for="route in routes">
+                    <div v-if="route.meta.show" class="w-100">
+                        <router-link :to="route.path"
+                            class="d-flex justify-content-center align-items-center text-dark p-2 rounded-pill text-decoration-none fw-bold">
+                            <i :class="route.meta.icon"></i>
+                            <span class="ms-1 d-xl-inline d-none">
                                 {{ route.meta.title }}
-                            </router-link>
-                        </div>
-                    </template>
-                </div>
+                            </span>
+                        </router-link>
+                    </div>
+                </template>
             </div>
         </div>
-    </div>
+        <div class="d-sm-none d-block position-absolute start-100 top-50 translate-middle-y">
+            <button
+                class="btn shadow my-1 text-dark overflow-hidden border-0 rounded-0 rounded-pill rounded-start border-none fw-bold fs-5 position-relative"
+                @click="show = !show"
+                >
+                <glass-vue></glass-vue>
+                <i class="bi" :class="'bi-arrow-' + (!show ? 'right' : 'left')"></i>
+            </button>
+            <button
+                class="btn shadow my-1 text-dark overflow-hidden border-0 rounded-0 rounded-pill rounded-start border-none fw-bold fs-5 position-relative"
+                @click="show = !show"
+                >
+                <glass-vue></glass-vue>
+                <i class="bi" :class="'bi-arrow-' + (!show ? 'right' : 'left')"></i>
+            </button>
+        </div>
+    </nav>
 </template>
 
 <script setup lang="ts">
+import logo from '../../assets/logo.png';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import glassVue from '../basic/glass.vue';
 
-withDefaults(defineProps<{
-    articleCount: number | string
-}>(), {
-    articleCount: 0
-});
+const show = ref(false);
 
 const router = useRouter();
 
@@ -50,11 +51,6 @@ const routes = router.getRoutes();
 </script>
 
 <style scoped>
-.head-portrait {
-    height: 6rem;
-    width: 6rem;
-}
-
 .router-link-active {
     background-color: var(--bs-dark) !important;
     color: var(--bs-white) !important;

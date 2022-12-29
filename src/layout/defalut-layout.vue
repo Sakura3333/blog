@@ -1,17 +1,17 @@
 <template>
     <div id="website-container">
-        <div class="container h-100 p-0">
-            <div class="d-flex flex-row h-100">
-                <header id="header" class="mx-1 my-2">
-                    <div class="header position-fixed">
-                        <slot name="header"></slot>
-                    </div>
+        <div class="container h-100 py-1 px-0">
+            <div class="row m-0 align-items-start h-100 w-100">
+                <header style="z-index: 10000;" class="px-0 col-lg-2 col-md-2 col-sm-2 col-2">
+                    <slot name="header"></slot>
                 </header>
-                <main id="main" class="flex-fill position-relative mx-1 my-2 h-auto">
-                    <slot name="main"></slot>
+                <main class="px-1 col-lg-7 col-md-10 col-sm-10 col-12 h-100">
+                    <div class="h-100">
+                        <slot name="main"></slot>
+                    </div>
                 </main>
-                <aside id="aside" class="mx-1">
-                    <div class="aside position-fixed h-100 py-2">
+                <aside class="px-0 col-lg-3 d-none d-lg-block">
+                    <div class="h-100">
                         <slot name="aside"></slot>
                     </div>
                 </aside>
@@ -25,17 +25,5 @@
 <style scoped>
 #website-container {
     height: 100vh;
-}
-#main {
-    max-width: calc(100% - 26rem);
-}
-#header, .header {
-    min-width: 10rem;
-    max-width: 10rem;
-}
-#aside, .aside {
-    min-width: 16rem;
-    max-width: 16rem;
-    z-index: 1;
 }
 </style>

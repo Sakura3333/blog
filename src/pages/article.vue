@@ -1,9 +1,9 @@
 <template>
-    <div class="flex-fill overflow-x-hidden">
-        <div class="container p-2">
+    <div class="overflow-x-hidden position-relative shadow-sm mt-1" style="min-height: calc(100% - 4.25rem); height: auto;">
+        <glass-vue class="m-0"></glass-vue>
+        <div class="container px-0">
             <div class="row m-0">
-                <div class="col-12 shadow-sm py-3 rounded position-relative overflow-hidden">
-                    <glass-vue class="m-0"></glass-vue>
+                <div class="col-12 py-3 overflow-hidden">
                     <div class="markdown-body p-3" v-html="state.articleHtml"></div>
                     <div class="col-12 p-0 mt-5">
                         <div class="row gx-2 justify-content-center">
@@ -19,8 +19,10 @@
                                         </div>
                                     </template>
                                     <template #append>
-                                        <div class="ps-2 d-flex justify-content-between align-items-end">
-                                            <small class="text-truncate text-muted">{{ state.preArticle?.articleBrief }}</small>
+                                        <div class="ps-2 d-flex w-100 justify-content-between align-items-end">
+                                            <small class="text-truncate text-muted">
+                                                {{ state.preArticle?.articleBrief }}
+                                            </small>
                                         </div>
                                     </template>
                                 </article-link-vue>
@@ -34,8 +36,10 @@
                                         <glass-vue></glass-vue>
                                     </template>
                                     <template #append>
-                                        <div class="flex-fill ps-2 d-flex justify-content-between align-items-end">
-                                            <small class="text-truncate text-muted">{{ state.nextArticle?.articleBrief }}</small>
+                                        <div class="flex-fill ps-2 d-flex justify-content-between w-100 align-items-end">
+                                            <small class="text-truncate text-muted">
+                                                {{ state.nextArticle?.articleBrief }}
+                                            </small>
                                             <i class="bi bi-chevron-double-right"></i>
                                         </div>
                                     </template>
@@ -43,7 +47,7 @@
                             </div>
                         </div>
                     </div>
-                    <footer-card-vue class="mt-2" :="page.article.footerCard"></footer-card-vue>
+                    <footer-card-vue class="mt-2" :="globalState.page?.article.footerCard"></footer-card-vue>
                 </div>
             </div>
         </div>
@@ -58,18 +62,16 @@ import FooterCardVue from '../components/basic/footerCard.vue';
 import { reactive, getCurrentInstance, inject, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { getAtricleByFileId } from '../api/api';
-import { ArticleInfo, GlobalState, PageConfig } from '../model/model';
+import { ArticleInfo, GlobalState } from '../model/model';
 const proxy = getCurrentInstance()?.proxy;
 const route = useRoute();
 const globalState: GlobalState = (inject('globalState') as GlobalState);
-const articleInfoList = globalState.articleInfoList;
-const page: PageConfig = (globalState.page as PageConfig);
 
 const state = reactive<{
     articleIndex: number,
     articleHtml: string,
     preArticle: ArticleInfo | null,
-    nextArticle: ArticleInfo | null
+    nextArticle: ArticleInfo | null,
 }>({
     articleIndex: -1,
     articleHtml: '',
@@ -78,15 +80,26 @@ const state = reactive<{
 });
 
 const init = () => {
-    state.articleIndex = articleInfoList.findIndex(item => item.articleFileId === route.params.articleFileId);
-    state.preArticle = state.articleIndex ? articleInfoList[state.articleIndex - 1] : null;
-    state.nextArticle = state.articleIndex < articleInfoList.length ? articleInfoList[state.articleIndex + 1] : null;
-    getAtricleByFileId(route.params.articleFileId, (data: any) => {
-        state.articleHtml = proxy?.marked.parse(data);
-    });
+    if (route.params.articleFileId && globalState.articleInfoList.length > 0) {
+        state.articleIndex = globalState.articleInfoList.findIndex(item => item.articleFileId === route.params.articleFileId);
+        state.preArticle = state.articleIndex ? globalState.articleInfoList[state.articleIndex - 1] : null;
+        state.nextArticle = state.articleIndex < globalState.articleInfoList.length ? globalState.articleInfoList[state.articleIndex + 1] : null;
+        getAtricleByFileId(route.params.articleFileId, (data: any) => {
+            state.articleHtml = proxy?.marked.parse(data);
+        });
+        let articleInfo: ArticleInfo = (globalState.articleInfoList.find(articleInfo => articleInfo.articleFileId === route.params.articleFileId) as ArticleInfo);
+        globalState.articleInfo = articleInfo;
+        globalState.title = articleInfo?.articleTitle;
+    }
 }
 
-watch(() => route.params.articleFileId, init);
+watch([() => route.params.articleFileId, () => globalState.articleInfoList], ([old1, old2], [val1, val2]) => {
+    if (old1 != val1 && old2.length > 0) {
+        init();
+    } else if (old2 != val2) {
+        init();
+    }
+});
 
 init();
 

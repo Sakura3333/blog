@@ -59,7 +59,7 @@ export function getMoodInfoList(callback: Function) {
  * @param callback 
  */
 export function getMoodByFileId(moodFileId: any, callback: Function) {
-    fetch(`${BaseURI.mood}/${moodFileId}`).then(res => {
+    fetch(`${BaseURI.mood}/${moodFileId}.md`).then(res => {
         res.text().then(data => {
             callback(data);
         });
@@ -72,7 +72,7 @@ export function getMoodByFileId(moodFileId: any, callback: Function) {
  * @param callback 
  */
 export function getAtricleByFileId(articleFileId: any, callback: Function) {
-    fetch(`${BaseURI.articles}/${articleFileId}`).then(res => {
+    fetch(`${BaseURI.articles}/${articleFileId}.md`).then(res => {
         res.text().then(data => {
             callback(data);
         });

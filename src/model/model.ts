@@ -5,7 +5,6 @@ export interface Tag {
 
 export interface ArticleInfo {
     articleCover: string;
-    articleCoverURL: string;
     articleFileId: string;
     articleTitle: string;
     articleBrief: string;
@@ -18,7 +17,6 @@ export interface MoodInfo {
     moodFileId: string;
     moodImages: string[];
     moodContentHtml: string;
-    moodImageURLList: string[];
     moodCreateTime: string;
 }
 
@@ -42,19 +40,19 @@ export interface Filing {
 
 export interface GlobalState{
     // 页面标题
-    title: string,
+    title: string;
     // 是否显示回退按钮
-    showBackBtn: boolean,
+    showBackBtn: boolean;
     // 是否处在文章中
-    inArticle: boolean,
+    inArticle: boolean;
     // 文章信息
-    articleInfo: ArticleInfo | null,
+    articleInfo: ArticleInfo | null;
     // 文章信息列表
-    articleInfoList: ArticleInfo[],
+    articleInfoList: ArticleInfo[];
+    // 搜索结果
+    articleInfoSearchResult: ArticleInfo[];
     // 标签列表
-    articleTagList: Tag[],
-    // 归档
-    filingList: Filing[]
+    articleTagList: Tag[];
     // 页面配置
-    page: PageConfig | null
+    page: PageConfig;
 }

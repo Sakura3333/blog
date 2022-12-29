@@ -7,40 +7,47 @@
             <header-vue :article-count="globalState.articleInfoList?.length"></header-vue>
         </template>
         <template #main>
-            <mainbar-vue :title="globalState.title" :show-back-btn="globalState.showBackBtn">
-                <weather-vue v-show="!globalState.inArticle"></weather-vue>
-                <article-info-vue :="globalState.articleInfo" v-show="globalState.inArticle"></article-info-vue>
-            </mainbar-vue>
-            <router-view #default="{ Component }">
+            <div style="height: 4rem;">
+                <div class="position-ssm-fixed top-0 w-100 start-0" style="z-index: 100;">
+                    <mainbar-vue :title="globalState.title" :show-back-btn="globalState.showBackBtn">
+                        <weather-vue v-show="!globalState.inArticle"></weather-vue>
+                        <article-info-vue :="globalState.articleInfo" v-show="globalState.inArticle"></article-info-vue>
+                    </mainbar-vue>
+                </div>
+            </div>
+            <router-view #default="{ Component }" class="pb-5">
                 <keep-alive>
                     <component :is="Component"></component>
                 </keep-alive>
             </router-view>
+            <div class="w-100" style="transform: translateY(-100%);">
+                <div class="container">
+                    <div class="row">
+                        <div class="col py-2 text-dark text-center position-relative">
+                            <small>LifeSeagull | 本站已运行：{{ runningTime }} 天</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </template>
         <template #aside>
             <aside-vue></aside-vue>
         </template>
     </defalut-layout-vue>
-    <!-- <div class="start-0 bottom-0 w-100">
-        <div class="container">
-            <div class="row">
-                <div class="col py-2 text-dark text-center position-relative">
-                    <glass-vue></glass-vue>
-                    <small>LifeSeagull | 本站已运行：{{ runningTime }} 天</small>
-                </div>
-            </div>
-        </div>
-    </div> -->
+    <backtop-vue>
+        <glass-vue></glass-vue>
+    </backtop-vue>
 </template>
 
 <script lang="ts" setup>
 import defalutLayoutVue from './layout/defalut-layout.vue';
 import headerVue from './components/composite/header.vue';
-import glassVue from './components/basic/glass.vue';
 import asideVue from './components/composite/aside.vue';
 import mainbarVue from './components/composite/mainbar.vue';
 import weatherVue from './components/basic/weatherInfo.vue';
 import articleInfoVue from './components/basic/articleInfo.vue';
+import backtopVue from './components/basic/backtop.vue';
+import glassVue from './components/basic/glass.vue';
 import { useRoute } from 'vue-router';
 import { provide, reactive, watch, ref } from 'vue';
 import { getPageConf, getArticleInfoList, getFileBlob } from './api/api';
@@ -56,9 +63,20 @@ const globalState = reactive<GlobalState>({
     inArticle: false,
     articleInfo: null,
     articleInfoList: [],
+    articleInfoSearchResult: [],
     articleTagList: [],
-    filingList: [],
-    page: null
+    page: {
+        startTime: '',
+        background: [''],
+        article: {
+            footerCard: {
+                commend: '',
+                content: '',
+                caption: '',
+                background: ''
+            }
+        }
+    }
 });
 
 getPageConf((data: PageConfig) => {
@@ -71,13 +89,6 @@ getPageConf((data: PageConfig) => {
 getArticleInfoList((data: any) => {
     globalState.articleInfoList = data;
     globalState.articleInfoList?.forEach(articleInfo => {
-        getFileBlob(articleInfo.articleCover, (data: Blob) => {
-            articleInfo.articleCoverURL = URL.createObjectURL(data);
-        });
-        let articleCreateDate = articleInfo.articleCreateTime.split(' ')[0];
-        let filings = globalState.filingList.filter(filing => filing.filingTime == articleCreateDate);
-        if (filings.length > 0) filings[0].filingCount++;
-        else globalState.filingList.push({filingTime: articleCreateDate, filingCount: 1});
         articleInfo.articleTag.forEach(tagName => {
             let tags = globalState.articleTagList.filter(tag => tag.tagName == tagName);
             if (tags.length > 0) {
@@ -121,6 +132,21 @@ html {
     scrollbar-base-color: green;
     scrollbar-track-color: red;
     scrollbar-arrow-color: blue;
+}
+
+.fs-7 {
+    font-size: 0.8rem;
+}
+
+@media screen and (max-width: 576px) {
+    .position-ssm-fixed {
+        position: fixed!important;;
+    }
+}
+@media screen and (max-width: 768px) {
+    .position-sm-fixed {
+        position: fixed!important;;
+    }
 }
 
 ::-webkit-scrollbar {

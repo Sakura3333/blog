@@ -1,5 +1,6 @@
 <template>
-    <div class="bg-dark bg-gradient rounded px-2 py-3 text-light">
+    <div class="bg-dark bg-gradient rounded px-2 py-3 text-light position-relative">
+        <div class="bg-light position-absolute top-0 end-0 mt-2 me-2 rounded-circle" style="width: .5rem; height: .5rem;"></div>
         <small class="d-block fw-bold">
             {{ commend }}
         </small>
