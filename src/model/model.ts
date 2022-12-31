@@ -43,6 +43,8 @@ export interface GlobalState{
     title: string;
     // 是否显示回退按钮
     showBackBtn: boolean;
+    // 是否显示评论系统
+    showValine: boolean;
     // 是否处在文章中
     inArticle: boolean;
     // 文章信息

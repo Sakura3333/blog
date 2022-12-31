@@ -18,7 +18,8 @@ const routes: RouteRecordRaw[] = [
         meta: {
             icon: 'bi bi-house-fill',
             title: '首页',
-            show: true
+            show: true,
+            showValine: false
         }
     },{
         path: "/article/:articleFileId",
@@ -26,7 +27,8 @@ const routes: RouteRecordRaw[] = [
         meta: {
             icon: 'bi bi-house-fill',
             title: '文章',
-            show: false
+            show: false,
+            showValine: true
         }
     },{
         path: "/mood",
@@ -34,7 +36,8 @@ const routes: RouteRecordRaw[] = [
         meta: {
             icon: 'bi bi-emoji-sunglasses-fill',
             title: '动态',
-            show: true
+            show: true,
+            showValine: false
         }
     },{
         path: "/message",
@@ -42,7 +45,8 @@ const routes: RouteRecordRaw[] = [
         meta: {
             icon: 'bi bi-chat-dots-fill',
             title: '留言',
-            show: true
+            show: true,
+            showValine: true
         }
     },{
         path: "/filing",
@@ -50,7 +54,8 @@ const routes: RouteRecordRaw[] = [
         meta: {
             icon: 'bi bi-book-fill',
             title: '归档',
-            show: true
+            show: true,
+            showValine: false
         }
     },{
         path: "/resume",
@@ -58,7 +63,8 @@ const routes: RouteRecordRaw[] = [
         meta: {
             icon: 'bi bi-file-person-fill',
             title: '简历',
-            show: true
+            show: true,
+            showValine: false
         }
     },{
         path: "/search",
@@ -66,7 +72,8 @@ const routes: RouteRecordRaw[] = [
         meta: {
             icon: 'bi bi-search',
             title: '搜索',
-            show: true
+            show: true,
+            showValine: false
         }
     }
 ];

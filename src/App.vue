@@ -15,11 +15,12 @@
                     </mainbar-vue>
                 </div>
             </div>
-            <router-view #default="{ Component }" class="pb-5">
+            <router-view #default="{ Component }">
                 <keep-alive>
                     <component :is="Component"></component>
                 </keep-alive>
             </router-view>
+            <valine-vue :show="globalState.showValine"></valine-vue>
             <div class="w-100" style="transform: translateY(-100%);">
                 <div class="container">
                     <div class="row">
@@ -48,9 +49,10 @@ import weatherVue from './components/basic/weatherInfo.vue';
 import articleInfoVue from './components/basic/articleInfo.vue';
 import backtopVue from './components/basic/backtop.vue';
 import glassVue from './components/basic/glass.vue';
+import valineVue from './components/composite/valine.vue';
 import { useRoute } from 'vue-router';
 import { provide, reactive, watch, ref } from 'vue';
-import { getPageConf, getArticleInfoList, getFileBlob } from './api/api';
+import { getPageConf, getArticleInfoList } from './api/api';
 import { GlobalState, PageConfig } from './model/model';
 
 const route = useRoute();
@@ -59,6 +61,7 @@ const runningTime = ref<string>('');
 
 const globalState = reactive<GlobalState>({
     title: '首页',
+    showValine: false,
     showBackBtn: false,
     inArticle: false,
     articleInfo: null,
@@ -115,6 +118,7 @@ watch(() => route.fullPath, () => {
     if (history.length > 0) globalState.showBackBtn = true;
     else globalState.showBackBtn = false;
 
+    globalState.showValine = route.meta.showValine as boolean;
 });
 </script>
 

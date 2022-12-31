@@ -30,60 +30,6 @@ https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javasc
  * Based on dabblet (http://dabblet.com)
  * @author Lea Verou
  */
-.markdown-body {
-  /* Code blocks */
-  /* Inline code */
-}
-.markdown-body code[class*=language-],
-.markdown-body pre[class*=language-] {
-  color: #6b6884;
-  background: none;
-  font-family: Menlo-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
-  font-size: 1em;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  line-height: 1.5rem;
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-}
-.markdown-body pre[class*=language-]::-moz-selection, .markdown-body pre[class*=language-] ::-moz-selection,
-.markdown-body code[class*=language-]::-moz-selection, .markdown-body code[class*=language-] ::-moz-selection {
-  text-shadow: none;
-  background: #b3d4fc;
-}
-.markdown-body pre[class*=language-]::selection, .markdown-body pre[class*=language-] ::selection,
-.markdown-body code[class*=language-]::selection, .markdown-body code[class*=language-] ::selection {
-  text-shadow: none;
-  background: #b3d4fc;
-}
-@media print {
-  .markdown-body code[class*=language-],
-  .markdown-body pre[class*=language-] {
-    text-shadow: none;
-  }
-}
-.markdown-body pre[class*=language-] {
-  padding: 1em;
-  margin: 0.5em 0;
-  overflow: auto;
-}
-.markdown-body :not(pre) > code[class*=language-],
-.markdown-body pre[class*=language-] {
-  background: white;
-}
-.markdown-body :not(pre) > code[class*=language-] {
-  padding: 0.1em;
-  border-radius: 0.3em;
-  white-space: normal;
-}
 .markdown-body .token.comment,
 .markdown-body .token.prolog,
 .markdown-body .token.doctype,
@@ -166,8 +112,8 @@ https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javasc
 .markdown-body > *:last-child {
   margin-top: 0 !important;
 }
-.markdown-body p, .markdown-body pre, .markdown-body ul, .markdown-body ol, .markdown-body dl, .markdown-body form, .markdown-body details, .markdown-body dl, .markdown-body blockquote, .markdown-body table, .markdown-body xmp, .markdown-body plaintext, .markdown-body listing, .markdown-body figure,
-.markdown-body pre[class*=language-] {
+.markdown-body p, .markdown-body ul, .markdown-body ol, .markdown-body dl, .markdown-body form, .markdown-body details, .markdown-body dl, .markdown-body blockquote, .markdown-body table, .markdown-body xmp, .markdown-body plaintext, .markdown-body listing, 
+.markdown-body figure {
   margin: 0.75em 0 0.45em;
 }
 .markdown-body hr {
@@ -214,10 +160,6 @@ https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javasc
 .markdown-body p {
   margin-left: 0;
   margin-right: 0;
-}
-.markdown-body pre, .markdown-body pre[class*=language-] {
-  padding: 0;
-  border: 0;
 }
 .markdown-body blockquote {
   display: block;
@@ -315,23 +257,8 @@ https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javasc
 .markdown-body del, .markdown-body s {
   color: #8d8f95;
 }
-.markdown-body pre, .markdown-body xmp, .markdown-body plaintext, .markdown-body listing, .markdown-body code, .markdown-body kbd, .markdown-body tt, .markdown-body samp {
+.markdown-body xmp, .markdown-body plaintext, .markdown-body listing, .markdown-body kbd, .markdown-body tt, .markdown-body samp {
   font-family: Menlo-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
-}
-.markdown-body code {
-  display: inline;
-  border: solid 1px #bfc1c4;
-  padding: 0.2em 0.5em;
-  font-size: 0.9em;
-  color: #272d38;
-  background-color: white;
-}
-.markdown-body pre > code {
-  display: block;
-  border: solid 1px #bfc1c4;
-  padding: 0.7em 1em;
-  font-size: 0.9em;
-  overflow-x: auto;
 }
 .markdown-body mark {
   color: inherit;

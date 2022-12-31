@@ -78,16 +78,3 @@ export function getAtricleByFileId(articleFileId: any, callback: Function) {
         });
     });
 }
-
-/**
- * 获取图片自由
- * @param url 资源路径
- * @param callback 回调
- */
-export function getFileBlob(filename: string, callback: Function) {
-    fetch(`${BaseURI.images}/${filename}`).then(res => {
-        res.blob().then(data => {
-            callback(data);
-        });
-    });
-}

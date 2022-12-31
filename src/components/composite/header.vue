@@ -25,13 +25,6 @@
                 <glass-vue></glass-vue>
                 <i class="bi" :class="'bi-arrow-' + (!show ? 'right' : 'left')"></i>
             </button>
-            <button
-                class="btn shadow my-1 text-dark overflow-hidden border-0 rounded-0 rounded-pill rounded-start border-none fw-bold fs-5 position-relative"
-                @click="show = !show"
-                >
-                <glass-vue></glass-vue>
-                <i class="bi" :class="'bi-arrow-' + (!show ? 'right' : 'left')"></i>
-            </button>
         </div>
     </nav>
 </template>

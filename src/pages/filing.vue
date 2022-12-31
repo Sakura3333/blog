@@ -3,9 +3,9 @@
         <glass-vue></glass-vue>
         <div class="container px-2">
             <div class="row">
-                <jumbotron-vue title="归档" content="失败才是我们活着的证明。" quote="《我的青春恋爱物语果然有问题》"></jumbotron-vue>
+                <jumbotron-vue class="mb-3" title="归档" content="失败才是我们活着的证明。" quote="《我的青春恋爱物语果然有问题》" background="https://s1.ax1x.com/2022/12/30/pS9FLi4.jpg"></jumbotron-vue>
                 <template v-for="filing, i in state.filings">
-                    <div class="col-12 d-flex align-items-start">
+                    <div class="col-12 px-4 d-flex align-items-start">
                         <div class="pe-2 h-100 position-relative d-flex flex-column">
                             <span class="badge fw-bold text-dark">
                                 {{ filing.time }}
@@ -20,9 +20,9 @@
                                 <i class="bi bi-clock-history"></i>
                             </div>
                         </div>
-                        <div class="flex-fill mt-4 mb-4 position-relative">
+                        <div class="flex-fill mt-4 mb-5 position-relative">
                             <template v-for="articleInfo in filing.data">
-                                <article-link-vue :="{articleTitle: articleInfo.articleTitle, articleFileId: articleInfo.articleFileId}" class="mt-3">
+                                <article-link-vue :="{articleTitle: articleInfo.articleTitle, articleFileId: articleInfo.articleFileId}" class="mt-3 btn btn-outline-light border-0" custom-class="text-start">
                                     <template #prepend>
                                         <span class="float-end">{{ articleInfo.articleCreateTime.split(" ")[1] }}</span>
                                     </template>

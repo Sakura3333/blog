@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-x-hidden position-relative shadow-sm mt-1" style="min-height: calc(100% - 4.25rem); height: auto;">
+    <div class="overflow-x-hidden position-relative shadow-sm mt-1">
         <glass-vue class="m-0"></glass-vue>
         <div class="container px-0">
             <div class="row m-0">
@@ -50,6 +50,11 @@
                     <footer-card-vue class="mt-2" :="globalState.page?.article.footerCard"></footer-card-vue>
                 </div>
             </div>
+            <div class="row m-0">
+                <div class="col-12 py-3 overflow-hidden">
+                    <div id="article-vcomments"></div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -59,14 +64,13 @@ import '../css/mweb-smartblue.css';
 import glassVue from '../components/basic/glass.vue';
 import ArticleLinkVue from '../components/basic/articleLink.vue';
 import FooterCardVue from '../components/basic/footerCard.vue';
-import { reactive, getCurrentInstance, inject, watch } from 'vue';
+import { reactive, ref, onMounted, getCurrentInstance, inject, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { getAtricleByFileId } from '../api/api';
 import { ArticleInfo, GlobalState } from '../model/model';
 const proxy = getCurrentInstance()?.proxy;
 const route = useRoute();
 const globalState: GlobalState = (inject('globalState') as GlobalState);
-
 const state = reactive<{
     articleIndex: number,
     articleHtml: string,

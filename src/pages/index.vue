@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-x-hidden position-relative mt-1 shadow-sm" style="min-height: calc(100% - 4.25rem); height: auto;">
+    <div class="overflow-x-hidden position-relative mt-1 shadow-sm pb-5" style="min-height: calc(100% - 4.25rem); height: auto;">
         <glass-vue></glass-vue>
         <div class="container p-0">
             <div class="row m-0" v-if="globalState.articleInfoList">
