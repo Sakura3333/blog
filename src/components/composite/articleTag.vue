@@ -5,14 +5,14 @@
 </template>
 <script setup lang="ts">
 import { inject } from 'vue';
-import { GlobalState, ArticleInfo } from '../../model/model';
+import { GlobalState, ArticleMapperRecord } from '../../model/inerface';
 import { Router, useRouter } from 'vue-router';
 
 const globalState: GlobalState = inject("globalState") as GlobalState;
 const router: Router = useRouter();
 const searchClassify = (_articleTag: string) => {
     globalState.articleInfoSearchResult = [];
-    globalState.articleInfoList.forEach((articleInfo: ArticleInfo) => {
+    globalState.articleInfoList.forEach((articleInfo: ArticleMapperRecord) => {
         let articleTag = articleInfo.articleTag.filter(articleTag => articleTag === _articleTag);
         if (articleTag.length > 0) {
             globalState.articleInfoSearchResult.push(articleInfo);

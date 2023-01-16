@@ -23,10 +23,10 @@
 </template>
 <script setup lang="ts">
 import articleLinkVue from '../basic/articleLink.vue';
-import { ArticleInfo } from '../../model/model';
+import { ArticleMapperRecord } from '../../model/inerface';
 
 defineProps<{
-    articleInfo: ArticleInfo
+    articleInfo: ArticleMapperRecord
 }>();
 </script>
 <style scoped>

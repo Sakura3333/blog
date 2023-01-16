@@ -1,7 +1,6 @@
 <template>
-    <div class="overflow-x-hidden position-relative mt-1 shadow-sm" style="min-height: calc(100% - 4.25rem); height: auto;">
-        <glass-vue></glass-vue>
-        <div class="container px-2">
+    <div class="overflow-x-hidden position-relative" style="min-height: calc(100% - 4.25rem); height: auto;">
+        <div class="container-fluid">
             <div class="row">
                 <jumbotron-vue class="mb-3" title="归档" content="失败才是我们活着的证明。" quote="《我的青春恋爱物语果然有问题》" background="https://s1.ax1x.com/2022/12/30/pS9FLi4.jpg"></jumbotron-vue>
                 <template v-for="filing, i in state.filings">
@@ -46,24 +45,23 @@
     </div>
 </template>
 <script setup lang="ts">
-import glassVue from '../components/basic/glass.vue';
 import jumbotronVue from '../components/basic/jumbotron.vue';
 import articleLinkVue from '../components/basic/articleLink.vue';
 import { inject, reactive, watch } from 'vue';
-import { GlobalState, ArticleInfo } from '../model/model';
+import { GlobalState, ArticleMapperRecord } from '../model/inerface';
 
 const globalState: GlobalState = (inject("globalState") as GlobalState);
 const state = reactive<{
     filings: {
         time: string,
-        data: ArticleInfo[]
+        data: ArticleMapperRecord[]
     }[]
 }>({
     filings: []
 })
 
 const init = () => {
-    globalState.articleInfoList.forEach((articleInfo: ArticleInfo) => {
+    globalState.articleInfoList.forEach((articleInfo: ArticleMapperRecord) => {
         let filingList = state.filings.filter(filing => filing.time === articleInfo.articleCreateTime.split(" ")[0]);
         if (filingList.length > 0) {
             filingList[0].data.push(articleInfo);

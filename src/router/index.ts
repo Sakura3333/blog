@@ -72,7 +72,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
             icon: 'bi bi-search',
             title: '搜索',
-            show: true,
+            show: false,
             showValine: false
         }
     }

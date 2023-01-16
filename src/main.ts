@@ -23,6 +23,8 @@ import csharp from 'highlight.js/lib/languages/csharp';
 import cpp from 'highlight.js/lib/languages/cpp';
 import c from 'highlight.js/lib/languages/c';
 import 'highlight.js/styles/github-dark.css';
+import './assets/css/theme-default.css';
+import './assets/css/util-class.css';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('java', java);

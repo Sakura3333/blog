@@ -1,28 +1,10 @@
 <template>
     <div class="h-100 d-flex flex-column">
-        <div class="shadow-sm position-relative" style="height: 4rem;">
-            <glass-vue></glass-vue>
-            <article-search-vue></article-search-vue>
-        </div>
         <div class="shadow-sm position-relative mt-1">
             <glass-vue></glass-vue>
             <div class="p-2 h-100 d-flex flex-column">
                 <div class="fw-bold">分类</div>
                 <div class="flex-fill overflow-auto">
-                    <ul class="list-group">
-                        <template v-for="tag in globalState?.articleTagList">
-                            <li class="list-group-item bg-transparent border-0">
-                                <article-tag-search-link-vue class="text-dark">
-                                    <template #default="{ search }">
-                                        <div class="d-flex justify-content-between" @click.prevent="search(tag.tagName)">
-                                            <span>{{ tag.tagName }}</span>
-                                            <span>{{ tag.tagCount }}</span>
-                                        </div>
-                                    </template>
-                                </article-tag-search-link-vue>
-                            </li>
-                        </template>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -57,11 +39,9 @@
 </template>
 <script setup lang="ts">
 import glassVue from '../basic/glass.vue';
-import articleSearchVue from './articleSearch.vue';
 import articleLinkVue from '../basic/articleLink.vue';
-import articleTagSearchLinkVue from './articleTagSearchLink.vue';
 import { inject } from 'vue';
-import { GlobalState } from '../../model/model';
+import { GlobalState } from '../../model/inerface';
 const globalState:GlobalState = inject('globalState') as GlobalState;
 
 </script>

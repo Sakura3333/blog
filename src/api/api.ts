@@ -1,9 +1,5 @@
-const BaseURI = {
-    config: '../config',
-    articles: '../articles',
-    images: '../images',
-    mood: '../mood'
-};
+import { Conf, Dir } from "../model/enum";
+
 /**
  * 获取城市天气
  * @param cityCode 城市代码
@@ -18,63 +14,37 @@ export function getWeather(cityCode: string, callback: Function) {
 }
 
 /**
- * 获取页面配置信息
+ * 获取配置信息
  * @param callback 回调
  */
-export function getPageConf(callback: Function) {
-    fetch(`${BaseURI.config}/page.json`).then(res => {
+export function getConf(conf: Conf, callback: Function) {
+    fetch(`../${Dir.CONF}/${conf}.json`).then(res => {
         res.json().then(data => {
             callback(data);
         });
     })
 }
 
-/**
- * 获取文章信息列表
- * @param callback 回调
- */
-export function getArticleInfoList(callback: Function) {
-    fetch(`${BaseURI.config}/article-info-list.json`).then(res => {
-        res.json().then(data => {
-            callback(data);
-        });
-    })
-}
-
-/**
- * 获取动态信息列表
- * @param callback 回调
- */
-export function getMoodInfoList(callback: Function) {
-    fetch(`${BaseURI.config}/mood-info-list.json`).then(res => {
-        res.json().then(data => {
-            callback(data);
-        });
-    })
-}
 
 /**
  * 获取动态内容
  * @param moodFileId 动态文件id
  * @param callback 
  */
-export function getMoodByFileId(moodFileId: any, callback: Function) {
-    fetch(`${BaseURI.mood}/${moodFileId}.md`).then(res => {
-        res.text().then(data => {
-            callback(data);
+export function getFileContentByFileId(dir: Dir, fileId: string | string[], callback: Function) {
+    if (fileId instanceof Array) {
+        fileId.forEach(fi => {
+            fetch(`../${dir}/${fi}.md`).then(res => {
+                res.text().then(data => {
+                    callback(data);
+                });
+            });
+        })
+    } else {
+        fetch(`../${dir}/${fileId}.md`).then(res => {
+            res.text().then(data => {
+                callback(data);
+            });
         });
-    });
-}
-
-/**
- * 获取文章内容
- * @param articleFileId 文章文件id
- * @param callback 
- */
-export function getAtricleByFileId(articleFileId: any, callback: Function) {
-    fetch(`${BaseURI.articles}/${articleFileId}.md`).then(res => {
-        res.text().then(data => {
-            callback(data);
-        });
-    });
+    }
 }

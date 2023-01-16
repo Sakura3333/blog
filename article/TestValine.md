@@ -1,7 +1,8 @@
 > 今天接入了valine评论系统，有点没玩明白。
 > 猜想：valine通过window.location.pathname来展示对应的评论，一个页面只能有一个valine评论组件，而vue是单页面的，也就是说整个网站只能存在一个，可以将valine组件挂载在根节点，需要展示的路由让它显示即可。
-> 这篇文章是用来验证猜想的
-valine有个坑：
+> 这篇文章是用来验证猜想的。
+
+在接入的时候遇到了个坑：
 众所周知，vue是mvvm框架，写的时候习惯性将数据写成响应式的，惯性思维，见到对象就是响应式的，于是就有了下面一段代码
 ```typescript
 import Valine from 'valine';

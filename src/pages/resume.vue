@@ -1,7 +1,6 @@
 <template>
-    <div class="overflow-x-hidden position-relative mt-1 shadow-sm" style="min-height: calc(100% - 4.25rem); height: auto;">
-        <glass-vue></glass-vue>
-        <div class="container p-0">
+    <div class="overflow-x-hidden position-relative" style="min-height: calc(100% - 4.25rem); height: auto;">
+        <div class="container-fluid">
             <div class="row m-0">
                 <jumbotron-vue title="简历" content="失败才是我们活着的证明。" quote="《我的青春恋爱物语果然有问题》" background="https://s1.ax1x.com/2022/12/31/pS9jUMD.jpg"></jumbotron-vue>
                 <div class="col-12 d-flex" style="height: 3rem;">
@@ -29,7 +28,6 @@
     </div>
 </template>
 <script setup lang="ts">
-import glassVue from '../components/basic/glass.vue';
 import jumbotronVue from '../components/basic/jumbotron.vue';
     
 </script>

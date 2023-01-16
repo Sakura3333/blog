@@ -1,5 +1,5 @@
 <template>
-    <div class="w-100 px-2 pb-5 position-relative" :class="{'d-none': !show}">
+    <div class="w-100 position-relative" :class="{'d-none': !show}">
         <glass-vue></glass-vue>
         <div id="article-vcomments"></div>
     </div>
