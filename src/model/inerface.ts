@@ -56,8 +56,6 @@ export interface Filing {
  * 全局状态
  */
 export interface GlobalState{
-    // 是否显示评论系统
-    showValine: boolean;
     // 文章信息列表
     articleInfoList: ArticleMapperRecord[];
     // 搜索结果

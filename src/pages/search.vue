@@ -1,59 +1,81 @@
 <template>
-    <div class="overflow-x-hidden position-relative" style="min-height: calc(100% - 4.25rem); height: auto;">
-        <div class="container-fluid">
-            <div class="row m-0 d-lg-none">
-                <article-search-vue class="mx-auto mt-3"></article-search-vue>
+    <div class="absolute w-full h-full p-2 pb-7 flex flex-col justify-center">
+        <div class="w-full max-h-full max-w-xl mx-auto flex flex-col">
+            <div class="flex">
+                <input type="text" class="w-full border px-2 py-1 outline-none focus:border-black border-r-0"
+                    placeholder="输入关键字..." v-model="keywords" @keydown.enter="$router.replace('/search'),search(keywords)">
+                <button class="flex-shrink-0 border px-2 hover:bg-gray-200 border-l-0 focus:border-black"
+                    @click="$router.replace('/search'),search(keywords)">搜索</button>
             </div>
-            <div class="row m-0 d-lg-none">
-                <div class="mx-auto d-flex flex-wrap py-2">
-                    <template v-for="tag in globalState?.articleTagList">
-                        <div class="m-1 badge bg-dark">
-                            <article-tag-search-link-vue class="text-light">
-                                <template #default="{ search }">
-                                    <div @click.prevent="search(tag.tagName)">
-                                        <span>{{ tag.tagName }}</span>
-                                        <span>（{{ tag.tagCount }}）</span>
-                                    </div>
-                                </template>
-                            </article-tag-search-link-vue>
-                        </div>
-                    </template>
-                </div>
-            </div>
-            <div class="row m-0" v-if="globalState.searchInfoList.length > 0">
-                <template v-for="articleInfo in globalState.searchInfoList">
-                    <article-link-vue class="mt-2" :article-file-id="articleInfo.articleFileId">
-                        <div class="fw-bold">{{ articleInfo.articleTitle }}</div>
-                        <div>{{ articleInfo.articleBrief }}</div>
-                        <div class="d-flex">
-                            <span class="badge text-dark"><i class="bi bi-tag-fill"></i></span>
-                            <template v-for="tagName in articleInfo.articleTag">
-                                <span class="badge text-dark">
-                                    {{ tagName }}
-                                </span>
-                            </template>
-                        </div> 
-                    </article-link-vue>
+            <div class="py-2">
+                <template v-for="tag in globalState.articleTagList">
+                    <button class="m-1" @click="$router.replace('/search'),search(tag.tagName, ['articleTag'])">{{ tag.tagName }}</button>
                 </template>
+                <button class="px-2 hover:text-red-500 float-right" @click="searchResult = [], $router.replace('/search')" v-show="searchResult.length > 0">
+                    <font-awesome-icon icon="fa-solid fa-xmark" />
+                </button>
             </div>
-            <div class="row m-0" v-else>
-                <div class="card bg-transparent col-12 p-2 border-0 rounded-0">
-                    <div class="card-body text-muted text-center">
-                        没有搜索到任何结果哦...
-                    </div>
+            <div class=" flex-grow overflow-auto">
+                <div class="space-y-1">
+                    <template v-for="articleInfo in searchResult">
+                        <router-link class=" p-2 block overflow-hidden
+                            hover:bg-gray-100 " :to="`/article/${articleInfo.articleFileId}`"
+                            @click="switchPanel.maximizeBottomRight()">
+                            <div class="flex flex-nowrap justify-between items-end">
+                                <span class="whitespace-nowrap text-ellipsis overflow-hidden">
+                                    {{ articleInfo.articleTitle }}
+                                </span>
+                                <span class="flex-shrink-0 text-xs">
+                                    {{ articleInfo.articleCreateTime }}
+                                </span>
+                            </div>
+                            <div class="text-xs mt-1 flex">
+                                <div class="flex-grow whitespace-nowrap overflow-hidden text-ellipsis space-x-2">
+                                    <template v-for="tag in articleInfo.articleTag">
+                                        <span>{{ tag }}</span>
+                                    </template>
+                                </div>
+                            </div>
+                        </router-link>
+                    </template>
                 </div>
             </div>
         </div>
     </div>
 </template>
-<script setup lang="ts">
-import articleLinkVue from '../components/basic/articleLink.vue';
-import articleTagSearchLinkVue from '../components/composite/articleTag.vue';
-import { inject } from 'vue';
-import { GlobalState } from '../model/inerface';
-const globalState: GlobalState = inject("globalState") as GlobalState;
-    
+<script lang="ts">
+export default {
+    name: 'Search'
+}
 </script>
-<style scoped>
-    
-</style>
+<script setup lang="ts">
+import { inject, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { ArticleMapperRecord, GlobalState } from '../model/inerface';
+
+defineProps<{
+    switchPanel: any
+}>();
+
+const route = useRoute();
+
+const globalState: GlobalState = inject("globalState") as GlobalState;
+
+const keywords = ref<string>('');
+const searchResult = ref<ArticleMapperRecord[]>([])
+const search = (keywords: string, fields: string[] = ['articleTitle', 'articleBrief', 'articleTag']) => {
+    searchResult.value = [];
+    !keywords || globalState.articleInfoList.forEach((articleInfo: ArticleMapperRecord) => {
+        fields.forEach(field => {
+            if ((articleInfo as any)[field].includes(keywords) && !searchResult.value.includes(articleInfo)) {
+                searchResult.value.push(articleInfo);
+            }
+        });
+    });
+}
+
+watch(() => route.params, (val) => {
+    val.keywords && search(val.keywords as string, ['articleTag']);
+});
+
+</script>

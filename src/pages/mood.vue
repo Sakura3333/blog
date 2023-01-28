@@ -1,38 +1,49 @@
 <template>
-    <div class="overflow-x-hidden position-relative" style="min-height: calc(100% - 4.25rem); height: auto;">
-        <div class="container-fluid">
-            <div class="row m-0">
-                <jumbotron-vue class="mb-3" title="动态" content="失败才是我们活着的证明。" quote="《我的青春恋爱物语果然有问题》" background="https://s1.ax1x.com/2022/12/30/pS9it9s.jpg"></jumbotron-vue>
-                <template v-for="moodInfo, i in globalState.moodInfoList">
-                    <div class="col-12 bg-transparent card border-0">
-                        <div class="card-body" :class="{'border-bottom': i != globalState.moodInfoList.length-1}">
-                            <div class="mb-2"><small>{{ moodInfo.moodCreateTime }}</small></div>
-                            <div class="markdown-body" v-html="moodInfo.moodContentHtml"></div>
-                            <div class="d-flex flex-nowrap overflow-auto py-1" style="max-height: 10rem;" v-if="moodInfo.moodImages.length > 0">
-                                <template v-for="moodImageURL in moodInfo.moodImages">
-                                    <img :src="moodImageURL" class="img-fluid rounded mx-1" alt="">
-                                </template>
-                            </div>
+    <page-layout-vue>
+        <template #topbar>
+            <span class="uppercase">moods{{ globalState.moodInfoList.length }}</span>
+            <span>闇の炎に抱かれて消えろっ!</span>
+        </template>
+        <template #content>
+            <div class="space-y-5 w-full max-w-3xl mx-auto">
+                <template v-for="moodInfo in globalState.moodInfoList">
+                    <div class="space-y-1">
+                        <div>[ {{ moodInfo.moodCreateTime }} ]</div>
+                        <div v-html="moodInfo.moodContentHtml"></div>
+                        <div class="w-full overflow-auto h-32 p-1 flex space-x-2" v-if="moodInfo.moodImages.length">
+                            <template v-for="img in moodInfo.moodImages">
+                                <img :src="img" class="h-full ring-1 ring-offset-2 ring-gray-300" alt="">
+                            </template>
                         </div>
                     </div>
                 </template>
             </div>
-        </div>
-    </div>
+        </template>
+        <template #footbar>
+            <span></span>
+        </template>
+    </page-layout-vue>
 </template>
+<script lang="ts">
+export default {
+    name: 'Mood'
+}
+</script>
 
 <script setup lang="ts">
-import jumbotronVue from '../components/basic/jumbotron.vue';
+import pageLayoutVue from '../layout/page/default.vue';
 import { inject, watch, getCurrentInstance } from 'vue';
 import { GlobalState, MoodMapperRecord } from '../model/inerface';
 import { getFileContentByFileId } from '../api/api';
 import { Dir } from '../model/enum';
-const proxy = getCurrentInstance()?.proxy;
+
+const proxy = getCurrentInstance()?.proxy as any;
 const globalState: GlobalState = inject('globalState') as GlobalState;
 const init = () => {
     globalState.moodInfoList.forEach((moodInfo: MoodMapperRecord) => {
         getFileContentByFileId(Dir.MOOD, moodInfo.moodFileId, (data: any) => {
-            moodInfo.moodContentHtml = proxy?.marked.parse(data);
+            moodInfo.moodCreateTime
+            moodInfo.moodContentHtml = proxy.marked.parse(data);
         });
     });
 }

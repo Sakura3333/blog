@@ -1,6 +1,3 @@
-import Vue from 'vue';
-declare module '@vue/runtime-core' {
-    interface ComponentCustomProperties {
-        marked: any
-    }
+declare module 'valine' {
+    export default Valine
 }

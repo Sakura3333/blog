@@ -2,7 +2,6 @@
     <div class="overflow-x-hidden position-relative" style="min-height: calc(100% - 4.25rem); height: auto;">
         <div class="container-fluid">
             <div class="row m-0">
-                <jumbotron-vue title="简历" content="失败才是我们活着的证明。" quote="《我的青春恋爱物语果然有问题》" background="https://s1.ax1x.com/2022/12/31/pS9jUMD.jpg"></jumbotron-vue>
                 <div class="col-12 d-flex" style="height: 3rem;">
                     <div class="head-portrait bg-dark translate-middle-y"><img class="img" src="" alt=""></div>
                     <div class="ms-2 translate-middle-y d-flex flex-column justify-content-center">
@@ -27,8 +26,12 @@
         </div>
     </div>
 </template>
+<script lang="ts">
+export default {
+    name: 'Resume'
+}
+</script>
 <script setup lang="ts">
-import jumbotronVue from '../components/basic/jumbotron.vue';
     
 </script>
 <style scoped>

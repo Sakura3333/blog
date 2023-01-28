@@ -1,79 +1,108 @@
 import { createRouter, createWebHistory, Router, RouteRecordRaw } from 'vue-router';
-import index from '../pages/index.vue';
-import article from "../pages/article.vue";
-import resume from '../pages/resume.vue';
-import message from '../pages/message.vue';
-import mood from '../pages/mood.vue';
-import filing from '../pages/filing.vue';
-import search from '../pages/search.vue';
+import index from '../pages/Index.vue';
+import article from "../pages/Article.vue";
+import resume from '../pages/Resume.vue';
+import guestbook from '../pages/Guestbook.vue';
+import mood from '../pages/Mood.vue';
+import archived from '../pages/Archived.vue';
+import search from '../pages/Search.vue';
+import music from '../pages/Music.vue';
+import editor from '../pages/Editor.vue';
 
 const routes: RouteRecordRaw[] = [
     {
         path: "/:pathMatch(.*)*",
         name: "not found",
-        redirect: '/'
+        redirect: '/index'
     },{
-        path: "/",
-        component: index,
+        path: "/index",
+        name: "index",
+        components: {
+            bottomRight: index
+        },
         meta: {
-            icon: 'bi bi-house-fill',
-            title: '首页',
             show: true,
-            showValine: false
+            panel: 'bottomRight'
         }
     },{
         path: "/article/:articleFileId",
-        component: article,
+        name: 'article', 
+        components: {
+            bottomRight: article
+        },
         meta: {
-            icon: 'bi bi-house-fill',
-            title: '文章',
             show: false,
-            showValine: true
+            panel: 'bottomRight'
         }
     },{
         path: "/mood",
-        component: mood,
+        name: 'mood',
+        components: {
+            bottomRight: mood
+        },
         meta: {
-            icon: 'bi bi-emoji-sunglasses-fill',
-            title: '动态',
             show: true,
-            showValine: false
+            panel: 'bottomRight'
         }
     },{
-        path: "/message",
-        component: message,
+        path: "/guestbook",
+        name: 'guestbook',
+        components: {
+            bottomRight: guestbook
+        },
         meta: {
-            icon: 'bi bi-chat-dots-fill',
-            title: '留言',
             show: true,
-            showValine: true
+            panel: 'bottomRight'
         }
     },{
-        path: "/filing",
-        component: filing,
+        path: "/archived",
+        name: 'archived',
+        components: {
+            bottomRight: archived
+        },
         meta: {
-            icon: 'bi bi-book-fill',
-            title: '归档',
             show: true,
-            showValine: false
+            panel: 'bottomRight'
         }
     },{
         path: "/resume",
-        component: resume,
+        name: 'resume',
+        components: {
+            bottomRight: resume
+        },
         meta: {
-            icon: 'bi bi-file-person-fill',
-            title: '简历',
             show: true,
-            showValine: false
+            panel: 'bottomRight'
         }
     },{
-        path: "/search",
-        component: search,
+        path: "/music",
+        name: 'music',
+        components: {
+            topRight: music
+        },
         meta: {
-            icon: 'bi bi-search',
-            title: '搜索',
             show: false,
-            showValine: false
+            panel: 'topRight'
+        }
+    },{
+        path: "/search/:keywords?",
+        name: 'search',
+        components: {
+            topRight: search
+        },
+        meta: {
+            show: false,
+            panel: 'topRight'
+        }
+    },{
+        path: "/editor",
+        name: 'editor',
+        components: {
+            topRight: editor
+        },
+        meta: {
+            show: false,
+            panel: 'topRight'
         }
     }
 ];
