@@ -2,18 +2,18 @@
     <page-layout-vue>
         <template #topbar>
             <div class="space-x-2 flex-shrink-0">
-                <span>WORDS{{ state.articleWords }}</span>
+                <span>WORDS{{ state.words }}</span>
                 <span><font-awesome-icon icon="fa-regular fa-eye" /></span>
             </div>
-            <div class="flex-grow overflow-hidden px-2 whitespace-nowrap text-ellipsis"><span>{{
-                state.articleTitle
-            }}</span></div>
+            <div class="flex-grow overflow-hidden px-2 whitespace-nowrap text-ellipsis">
+                <span>{{ state.title }}</span>
+            </div>
             <router-link class="flex-shrink-0 -mr-2 px-2" to="/index">
                 <font-awesome-icon icon="fa-solid fa-xmark" />
             </router-link>
         </template>
         <template #content>
-            <div class="mx-auto max-w-3xl" v-html="state.articleHtml"></div>
+            <div class="mx-auto max-w-3xl" v-html="state.html"></div>
         </template>
         <template #footbar>
             <div class="space-x-2">
@@ -24,11 +24,11 @@
                 <button><font-awesome-icon icon="fa-brands fa-qq" /></button>
             </div>
             <div class="space-x-2">
-                <router-link custom #="{ navigate }" :to="`/article/${state.preArticle?.articleFileId}`">
+                <router-link custom #="{ navigate }" :to="`/article/${state.preArticle?.fid}`">
                     <button :class="{ 'text-gray-500 pointer-events-none': state.preArticle == null }"
                         @click="navigate"><font-awesome-icon icon="fa-solid fa-chevron-left" /></button>
                 </router-link>
-                <router-link custom #="{ navigate }" :to="`/article/${state.nextArticle?.articleFileId}`">
+                <router-link custom #="{ navigate }" :to="`/article/${state.nextArticle?.fid}`">
                     <button :class="{ 'text-gray-500 pointer-events-none': state.nextArticle == null }"
                         @click="navigate"><font-awesome-icon icon="fa-solid fa-chevron-right" /></button>
                 </router-link>
@@ -50,50 +50,49 @@ export default {
 import pageLayoutVue from '../layout/page/default.vue';
 import { reactive, getCurrentInstance, inject, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { getFileContentByFileId } from '../api/api';
-import { ArticleMapperRecord, GlobalState } from '../model/inerface';
-import { Dir } from '../model/enum';
+import { getMdContent } from '../api/api';
+import { ContentMapperRecord, DataSet } from '../model/conf';
 
 const proxy = getCurrentInstance()?.proxy as any;
 const route = useRoute();
-const globalState: GlobalState = (inject('globalState') as GlobalState);
+const globalData: DataSet = inject('globalData') as DataSet;
 const state = reactive<{
-    articleWords: number,
-    articleTitle: string,
-    articleIndex: number,
-    articleHtml: string,
-    preArticle: ArticleMapperRecord | null,
-    nextArticle: ArticleMapperRecord | null,
+    words: number,
+    title: string,
+    index: number,
+    html: string,
+    preArticle: ContentMapperRecord | null,
+    nextArticle: ContentMapperRecord | null,
     showComments: boolean
 }>({
-    articleWords: 0,
-    articleTitle: '',
-    articleIndex: -1,
-    articleHtml: '',
+    words: 0,
+    title: '',
+    index: -1,
+    html: '',
     preArticle: null,
     nextArticle: null,
     showComments: false
 });
 // 初始化文章信息
 const init = () => {
-    if (route.params.articleFileId && globalState.articleInfoList.length > 0) {
-        for (let i = 0; i < globalState.articleInfoList.length; i++) {
-            if (globalState.articleInfoList[i].articleFileId === route.params.articleFileId) {
-                state.articleIndex = i;
-                state.articleTitle = globalState.articleInfoList[i].articleTitle;
+    if (route.params.fid && globalData.articles.length > 0) {
+        for (let i = 0; i < globalData.articles.length; i++) {
+            if (globalData.articles[i].fid === route.params.fid) {
+                state.index = i;
+                state.title = globalData.articles[i].title;
                 break;
             }
         }
-        state.preArticle = state.articleIndex ? globalState.articleInfoList[state.articleIndex - 1] : null;
-        state.nextArticle = state.articleIndex < globalState.articleInfoList.length ? globalState.articleInfoList[state.articleIndex + 1] : null;
-        getFileContentByFileId(Dir.ARTICLE, route.params.articleFileId, (data: any) => {
-            state.articleHtml = proxy.marked.parse(data);
-            state.articleWords = data.length;
+        state.preArticle = state.index ? globalData.articles[state.index - 1] : null;
+        state.nextArticle = state.index < globalData.articles.length ? globalData.articles[state.index + 1] : null;
+        getMdContent(route.params.fid as string, (data: string) => {
+            state.html = proxy.marked.parse(data);
+            state.words = data.length;
         });
     }
 }
 // 通过路由跳文章界面
-watch([() => route.params.articleFileId, () => globalState.articleInfoList], ([old1, old2], [val1, val2]) => {
+watch([() => route.params.fid, () => globalData.articles], ([old1, old2], [val1, val2]) => {
     if (old1 != val1 && old2.length > 0) {
         init();
     } else if (old2 != val2) {

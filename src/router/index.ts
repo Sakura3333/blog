@@ -4,7 +4,7 @@ import article from "../pages/Article.vue";
 import resume from '../pages/Resume.vue';
 import guestbook from '../pages/Guestbook.vue';
 import mood from '../pages/Mood.vue';
-import archived from '../pages/Archived.vue';
+import archive from '../pages/Archive.vue';
 import search from '../pages/Search.vue';
 import music from '../pages/Music.vue';
 import editor from '../pages/Editor.vue';
@@ -25,7 +25,7 @@ const routes: RouteRecordRaw[] = [
             panel: 'bottomRight'
         }
     },{
-        path: "/article/:articleFileId",
+        path: "/article/:fid",
         name: 'article', 
         components: {
             bottomRight: article
@@ -55,10 +55,10 @@ const routes: RouteRecordRaw[] = [
             panel: 'bottomRight'
         }
     },{
-        path: "/archived",
-        name: 'archived',
+        path: "/archive",
+        name: 'archive',
         components: {
-            bottomRight: archived
+            bottomRight: archive
         },
         meta: {
             show: true,

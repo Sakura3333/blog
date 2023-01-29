@@ -8,8 +8,8 @@
                     @click="$router.replace('/search'),search(keywords)">搜索</button>
             </div>
             <div class="py-2">
-                <template v-for="tag in globalState.articleTagList">
-                    <button class="m-1" @click="$router.replace('/search'),search(tag.tagName, ['articleTag'])">{{ tag.tagName }}</button>
+                <template v-for="tag in globalData.tagList">
+                    <button class="m-1" @click="$router.replace('/search'),search(tag.name, ['tags'])">{{ tag.name }}</button>
                 </template>
                 <button class="px-2 hover:text-red-500 float-right" @click="searchResult = [], $router.replace('/search')" v-show="searchResult.length > 0">
                     <font-awesome-icon icon="fa-solid fa-xmark" />
@@ -17,21 +17,21 @@
             </div>
             <div class=" flex-grow overflow-auto">
                 <div class="space-y-1">
-                    <template v-for="articleInfo in searchResult">
+                    <template v-for="article in searchResult">
                         <router-link class=" p-2 block overflow-hidden
-                            hover:bg-gray-100 " :to="`/article/${articleInfo.articleFileId}`"
+                            hover:bg-gray-100 " :to="`/article/${article.fid}`"
                             @click="switchPanel.maximizeBottomRight()">
                             <div class="flex flex-nowrap justify-between items-end">
                                 <span class="whitespace-nowrap text-ellipsis overflow-hidden">
-                                    {{ articleInfo.articleTitle }}
+                                    {{ article.title }}
                                 </span>
                                 <span class="flex-shrink-0 text-xs">
-                                    {{ articleInfo.articleCreateTime }}
+                                    {{ article.time }}
                                 </span>
                             </div>
                             <div class="text-xs mt-1 flex">
                                 <div class="flex-grow whitespace-nowrap overflow-hidden text-ellipsis space-x-2">
-                                    <template v-for="tag in articleInfo.articleTag">
+                                    <template v-for="tag in article.tags">
                                         <span>{{ tag }}</span>
                                     </template>
                                 </div>
@@ -51,7 +51,7 @@ export default {
 <script setup lang="ts">
 import { inject, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { ArticleMapperRecord, GlobalState } from '../model/inerface';
+import { ContentMapperRecord, DataSet } from '../model/conf';
 
 defineProps<{
     switchPanel: any
@@ -59,23 +59,23 @@ defineProps<{
 
 const route = useRoute();
 
-const globalState: GlobalState = inject("globalState") as GlobalState;
+const globalData: DataSet = inject("globalData") as DataSet;
 
 const keywords = ref<string>('');
-const searchResult = ref<ArticleMapperRecord[]>([])
-const search = (keywords: string, fields: string[] = ['articleTitle', 'articleBrief', 'articleTag']) => {
+const searchResult = ref<ContentMapperRecord[]>([])
+const search = (keywords: string, fields: string[] = ['title', 'brief', 'tags']) => {
     searchResult.value = [];
-    !keywords || globalState.articleInfoList.forEach((articleInfo: ArticleMapperRecord) => {
+    !keywords || globalData.articles.forEach((article) => {
         fields.forEach(field => {
-            if ((articleInfo as any)[field].includes(keywords) && !searchResult.value.includes(articleInfo)) {
-                searchResult.value.push(articleInfo);
+            if ((article as any)[field].includes(keywords) && !searchResult.value.includes(article)) {
+                searchResult.value.push(article);
             }
         });
     });
 }
 
 watch(() => route.params, (val) => {
-    val.keywords && search(val.keywords as string, ['articleTag']);
+    val.keywords && search(val.keywords as string, ['tags']);
 });
 
 </script>

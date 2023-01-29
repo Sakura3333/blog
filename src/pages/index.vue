@@ -1,29 +1,29 @@
 <template>
     <page-layout-vue>
         <template #topbar>
-            <span class="uppercase">articles{{ globalState.articleInfoList.length }}</span>
+            <span class="uppercase">articles{{ globalData.articles.length }}</span>
             <span>闇の炎に抱かれて消えろっ!</span>
         </template>
         <template #content>
             <div class="flex flex-wrap justify-center items-center">
-                <template v-for="articleInfo, i in globalState.articleInfoList.slice(page, pageSize * (1 + page))">
+                <template v-for="article, i in globalData.articles.slice(page, pageSize * (1 + page))">
                     <div class="w-full md:w-1/2 2xl:w-1/3 p-0.5">
                         <div class="hover:backdrop-card border h-64 relative overflow-hidden">
-                            <img :src="articleInfo.articleCover" class="w-full h-full object-cover object-center"
+                            <img :src="article.imgs[0]" class="w-full h-full object-cover object-center"
                                 alt="">
-                            <router-link :to="`/article/${articleInfo.articleFileId}`" class="card-content relative">
-                                {{ articleInfo.articleBrief }}
+                            <router-link :to="`/article/${article.fid}`" class="card-content relative">
+                                {{ article.brief }}
                             </router-link>
                             <div class="absolute top-0 px-1 bg-gray-100 w-full flex flex-nowrap justify-between">
-                                <span class="flex-shrink-0">{{ articleInfo.articleCreateTime }}</span>
-                                <span class="flex-shrink-0 overflow-hidden">{{ articleInfo.articleTitle }}</span>
+                                <span class="flex-shrink-0">{{ article.time }}</span>
+                                <span class="flex-shrink-0 overflow-hidden">{{ article.title }}</span>
                             </div>
                             <div class="absolute bottom-0 px-1 bg-gray-100">
-                                <template v-for="tagName, i in articleInfo.articleTag">
+                                <template v-for="tagName, i in article.tags">
                                     <button class="uppercase text-xs" @click="switchPanel.maximizeTopRight(), $router.push(`/search/${tagName}`)">
                                         {{ tagName }} >>
                                     </button>
-                                    <span class="px-3" v-if="i < articleInfo.articleTag.length - 1">|</span>
+                                    <span class="px-3" v-if="i < article.tags.length - 1">|</span>
                                 </template>
                             </div>
                         </div>
@@ -40,10 +40,10 @@
                 <button class="px-1" @click="page > 0 ? page-- : null"><font-awesome-icon
                         icon="fa-solid fa-chevron-left" /></button>
                 <span>
-                    {{ page + 1 }} / {{ Math.ceil(globalState.articleInfoList.length / pageSize) }}
+                    {{ page + 1 }} / {{ Math.ceil(globalData.articles.length / pageSize) }}
                 </span>
                 <button class="px-1"
-                    @click="page < Math.ceil(globalState.articleInfoList.length / pageSize) - 1 ? page++ : null"><font-awesome-icon
+                    @click="page < Math.ceil(globalData.articles.length / pageSize) - 1 ? page++ : null"><font-awesome-icon
                         icon="fa-solid fa-chevron-right" /></button>
             </div>
         </template>
@@ -58,11 +58,11 @@ export default {
 <script setup lang="ts">
 import pageLayoutVue from '../layout/page/default.vue';
 import { inject, ref } from 'vue';
-import { GlobalState } from '../model/inerface';
+import { DataSet } from '../model/conf';
 defineProps<{
     switchPanel: any
 }>();
-const globalState: GlobalState = (inject('globalState') as GlobalState);
+const globalData: DataSet = inject('globalData') as DataSet;
 const page = ref<number>(0);
 const pageSize = ref<number>(10);
 

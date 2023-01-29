@@ -115,49 +115,40 @@ import defalutLayoutVue from './layout/overall/defalut.vue';
 import valineVue from './components/Valine.vue';
 
 import { provide, reactive } from 'vue';
-import { getConf } from './api/api';
-import { GlobalState, GlobalConf } from './model/inerface';
-import { Conf } from './model/enum';
+import { getConf, Conf } from './api/api';
+import { ContentMapperRecord, PageConf, DataSet } from './model/conf';
 
 // 带有评论功能的组件不进行缓存
 const routerViewExclude = ['Article', 'Guestbook']
 
 /**
- * 全局状态
+ * 全局数据
  */
-const globalState = reactive<GlobalState>({
-    articleInfoList: [],                    // 文章数据
-    articleTagList: [],                     // 文章标签
-    searchInfoList: [],                     // 搜索结果
-    moodInfoList: [],                       // 动态数据
-    globalConf: null                        // 全局配置
+const globalData = reactive<DataSet>({
+    articles: [],
+    moods: [],
+    tagList: [],
 });
-// 获取全局配置
-getConf(Conf.GLOBAL_CONF, (data: GlobalConf) => {
-    globalState.globalConf = data;
+// 获取网页配置
+getConf(Conf.PAGE_CONF, (data: PageConf) => {
+    globalData.pageConf = data;
 });
-// 获取文章映射
-getConf(Conf.ARTICLE_MAPPER, (data: any) => {
-    globalState.articleInfoList = data;
-    globalState.articleInfoList?.forEach(articleInfo => {
-        articleInfo.articleTag.forEach(tagName => {
-            let tags = globalState.articleTagList.filter(tag => tag.tagName == tagName);
-            if (tags.length > 0) {
-                tags[0].tagCount++;
-            } else {
-                globalState.articleTagList.push({
-                    tagName,
-                    tagCount: 1
-                });
-            }
+// 获取内容映射
+getConf(Conf.CONTENT_MAPPER, (data: ContentMapperRecord[]) => {
+    for (let i = 0; i < data.length; i ++) {
+        let contentMapperRecord = data[i];
+        if (contentMapperRecord.schema === 1) globalData.articles.push(contentMapperRecord);
+        else if (contentMapperRecord.schema === 2) globalData.moods.push(contentMapperRecord);
+    }
+    globalData.articles.forEach(article => {
+        article.tags.forEach(name => {
+            let tags = globalData.tagList.filter(tag => tag.name == name);
+            if (tags.length > 0) tags[0].count++;
+            else globalData.tagList.push({name, count: 1});
         });
     });
 });
-// 获取动态映射
-getConf(Conf.MOOD_MAPPER, (data: any) => {
-    globalState.moodInfoList = data;
-});
-// 共享全局状态
-provide('globalState', globalState);
+// 分发全局数据
+provide('globalData', globalData);
 
 </script>
