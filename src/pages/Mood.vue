@@ -46,11 +46,9 @@ const init = () => {
     });
 }
 
-watch(() => globalData.moods, (val, oldval) => {
-    if (oldval.length === 0 && val.length > 0) {
-        init();
-    }
-})
+watch(() => globalData.moods, init, {
+    deep: true
+});
 
 init();
 </script>
