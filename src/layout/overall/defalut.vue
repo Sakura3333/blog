@@ -1,6 +1,6 @@
 <template>
-    <div class="fixed w-full h-full overflow-hidden text-sm font-extralight">
-        <div class="absolute flex flex-wrap justify-center items-center w-2rate h-2rate duration-300"
+    <div class="fixed w-full h-full overflow-hidden text-sm font-extralight" style="background: url(https://s1.ax1x.com/2022/12/30/pS9FLi4.jpg) center no-repeat; background-size: cover;">
+        <div class="absolute flex flex-wrap justify-center items-center w-2rate h-2rate duration-300 backdrop-blur-xs"
             :style="panelState.bottomRight.maximized ? `left: ${customize.minVisiableSize.width};top:${customize.minVisiableSize.height};transform:translate(-50%,-50%);`:
             (panelState.bottomLeft.maximized ? `left:-${customize.minVisiableSize.width}; top:${customize.minVisiableSize.height};transform:translateY(-50%);` :
             (panelState.topRight.maximized ? `left:${customize.minVisiableSize.width};top:-${customize.minVisiableSize.height};transform:translateX(-50%);` :

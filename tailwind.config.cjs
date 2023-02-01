@@ -32,6 +32,9 @@ module.exports = {
         1800: '1800ms',
         2000: '2000ms',
       },
+      backdropBlur: {
+        xs: '2px'
+      }
     }
   },
   variants: {

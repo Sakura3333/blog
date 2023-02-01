@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full flex flex-col md:border">
+    <div class="h-full flex flex-col">
         <div class="flex justify-between items-center px-2 bg-gray-100 z-50">
             <slot name="topbar"></slot>
         </div>
