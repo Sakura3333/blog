@@ -1,3 +1,4 @@
+import { Panel } from '../model/panel';
 import { createRouter, createWebHistory, Router, RouteRecordRaw } from 'vue-router';
 import index from '../pages/Index.vue';
 import article from "../pages/Article.vue";
@@ -7,102 +8,104 @@ import mood from '../pages/Mood.vue';
 import archive from '../pages/Archive.vue';
 import search from '../pages/Search.vue';
 import music from '../pages/Music.vue';
-import editor from '../pages/Editor.vue';
+import music1 from '../pages/music/Music1.vue';
 
 const routes: RouteRecordRaw[] = [
     {
         path: "/:pathMatch(.*)*",
         name: "not found",
-        redirect: '/index'
+        redirect: '/index',
     },{
         path: "/index",
         name: "index",
         components: {
-            bottomRight: index
+            [Panel.BODYPANEL]: index
         },
         meta: {
+            // 是否显示router-link
             show: true,
-            panel: 'bottomRight'
+            // 所属面板
+            panel: Panel.BODYPANEL
         }
     },{
         path: "/article/:fid",
         name: 'article', 
         components: {
-            bottomRight: article
+            [Panel.BODYPANEL]: article
         },
         meta: {
             show: false,
-            panel: 'bottomRight'
+            panel: Panel.BODYPANEL
         }
     },{
         path: "/mood",
         name: 'mood',
         components: {
-            bottomRight: mood
+            [Panel.BODYPANEL]: mood
         },
         meta: {
             show: true,
-            panel: 'bottomRight'
+            panel: Panel.BODYPANEL
         }
     },{
         path: "/guestbook",
         name: 'guestbook',
         components: {
-            bottomRight: guestbook
+            [Panel.BODYPANEL]: guestbook
         },
         meta: {
             show: true,
-            panel: 'bottomRight'
+            panel: Panel.BODYPANEL
         }
     },{
         path: "/archive",
         name: 'archive',
         components: {
-            bottomRight: archive
+            [Panel.BODYPANEL]: archive
         },
         meta: {
             show: true,
-            panel: 'bottomRight'
+            panel: Panel.BODYPANEL
         }
     },{
         path: "/resume",
         name: 'resume',
         components: {
-            bottomRight: resume
+            [Panel.BODYPANEL]: resume
         },
         meta: {
             show: true,
-            panel: 'bottomRight'
+            panel: Panel.BODYPANEL
         }
     },{
         path: "/music",
         name: 'music',
         components: {
-            topRight: music
+            [Panel.HEADPANEL]: music
         },
         meta: {
             show: false,
-            panel: 'topRight'
+            panel: Panel.HEADPANEL
+        }
+    },{
+        path: "/music1",
+        name: 'music1',
+        components: {
+            [Panel.HEADPANEL]: music1
+        },
+        meta: {
+            show: false,
+            panel: Panel.HEADPANEL
         }
     },{
         path: "/search/:keywords?",
         name: 'search',
         components: {
-            topRight: search
+            [Panel.HEADPANEL]: search
         },
         meta: {
             show: false,
-            panel: 'topRight'
-        }
-    },{
-        path: "/editor",
-        name: 'editor',
-        components: {
-            topRight: editor
-        },
-        meta: {
-            show: false,
-            panel: 'topRight'
+            panel: Panel.HEADPANEL
         }
     }
 ];

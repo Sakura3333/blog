@@ -1,33 +1,27 @@
 <template>
     <defalut-layout-vue>
 
-        <!-- 左上，网站设置 -->
-        <template #topLeft="{ panelState, switchPanel }">
-
-            <div class="w-full h-full" :class="{ 'disable-event': !panelState.topLeft.maximized }">
-
-                <!-- 当前路由视图 -->
-                <router-view :route="!panelState.topLeft.maximized && panelState.topLeft.curRoute || undefined"
-                    name="topLeft" #="{ Component }" :switchPanel="switchPanel">
-                    <keep-alive :exclude="routerViewExclude">
-                        <component :is="Component"></component>
-                    </keep-alive>
-                </router-view>
-            </div>
-
+        <!-- 侧边栏 -->
+        <template #asidePanel="{ switchPanel }">
+            <ul class="pr-1 text-center font-modul h-full flex flex-col justify-center bg-transparent">
+                <template v-for="route in $router.getRoutes()">
+                    <template v-if="route.meta.show">
+                        <li><router-link class="uppercase" :to="route.path" @click="switchPanel.maximizeBodyPanel()">{{ route.name }}</router-link></li>
+                    </template>
+                </template>
+            </ul>
         </template>
 
-        <!-- 右上，页面工具栏 -->
-        <template #topRight="{ panelState, switchPanel }">
+        <!-- 工具栏 -->
+        <template #headPanel="{ panelState, switchPanel }">
 
-            <div class="w-full h-full flex flex-col justify-between relative"
-                :class="{ 'disable-event': panelState.topLeft.maximized || panelState.bottomLeft.maximized }">
+            <div class="h-full flex flex-col justify-between">
 
-                <div>
+                <div class="flex-grow h-0">
 
                     <!-- 当前路由视图 -->
-                    <router-view :route="!panelState.topRight.maximized && panelState.topRight.curRoute || undefined"
-                        name="topRight" #="{ Component }" :switchPanel="switchPanel">
+                    <router-view :route="!panelState[Panel.HEADPANEL].maximized && panelState[Panel.HEADPANEL].curRoute || undefined"
+                        :name="Panel.HEADPANEL" #="{ Component }" :switchPanel="switchPanel">
                         <keep-alive :exclude="routerViewExclude">
                             <component :is="Component"></component>
                         </keep-alive>
@@ -36,13 +30,10 @@
                 </div>
 
                 <div class="flex justify-end space-x-2 px-2 z-10">
-                    <button @click="switchPanel.maximizeTopRight(), $router.push('/editor')">
-                        <font-awesome-icon icon="fa-solid fa-pen-to-square" />
-                    </button>
-                    <button @click="switchPanel.maximizeTopRight(), $router.push('/music')">
+                    <button @click="switchPanel.maximizeHeadPanel(), $router.push('/music')">
                         <font-awesome-icon icon="fa-solid fa-headphones-simple" />
                     </button>
-                    <button @click="switchPanel.maximizeTopRight(), $router.push('/search')">
+                    <button @click="switchPanel.maximizeHeadPanel(), $router.push('/search')">
                         <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                     </button>
                     <a href="https://github.com/Sakura3333" target="_blank">
@@ -53,48 +44,13 @@
 
         </template>
 
-        <!-- 左下，页面导航 -->
-        <template #bottomLeft="{ panelState, switchPanel }">
-
-            <div class="w-full h-full flex justify-between"
-                :class="{ 'disable-event': panelState.topRight.maximized || panelState.topLeft.maximized }">
-
-                <div :class="panelState.bottomLeft.maximized ? 'flex-grow' : 'flex-grow-0'">
-
-                    <!-- 当前路由视图 -->
-                    <router-view
-                        :route="!panelState.bottomLeft.maximized && panelState.bottomLeft.curRoute || undefined"
-                        name="bottomLeft" #="{ Component }" :switchPanel="switchPanel">
-                        <keep-alive :exclude="routerViewExclude">
-                            <component :is="Component"></component>
-                        </keep-alive>
-                        <div class="w-full h-full flex justify-center items-center">
-                            默认内容
-                        </div>
-                    </router-view>
-
-                </div>
-
-                <ul class="pr-1 pt-5 text-right font-modul" :class="{ 'flex space-x-2': panelState.topLeft.maximized }">
-                    <template v-for="route in $router.getRoutes()">
-                        <template v-if="route.meta.show">
-                            <li><router-link class="uppercase" :to="route.path">{{ route.name }}</router-link></li>
-                        </template>
-                    </template>
-                </ul>
-
-            </div>
-
-        </template>
-
-        <!-- 右下，页面主要内容 -->
-        <template #bottomRight="{ panelState, switchPanel }">
-
-            <div class="h-full overflow-hidden" :class="{ 'disable-event': !panelState.bottomRight.maximized }">
+        <!-- 页面主要内容 -->
+        <template #bodyPanel="{ panelState, switchPanel }">
+            <div class="h-full overflow-hidden" :class="{ 'disable-event': !panelState[Panel.BODYPANEL].maximized }">
 
                 <!-- 当前路由视图 -->
-                <router-view :route="!panelState.bottomRight.maximized && panelState.bottomRight.curRoute || undefined"
-                    name="bottomRight" #="{ Component }" :switchPanel="switchPanel">
+                <router-view :route="!panelState[Panel.BODYPANEL].maximized && panelState[Panel.BODYPANEL].curRoute || undefined"
+                    :name="Panel.BODYPANEL" #="{ Component }" :switchPanel="switchPanel">
                     <keep-alive :exclude="routerViewExclude">
                         <component :is="Component">
                             <template #valine>
@@ -114,6 +70,7 @@
 import defalutLayoutVue from './layout/overall/defalut.vue';
 import valineVue from './components/Valine.vue';
 
+import { Panel } from "./model/panel";
 import { provide, reactive } from 'vue';
 import { getConf, Conf } from './api/api';
 import { ContentMapperRecord, PageConf, DataSet } from './model/conf';

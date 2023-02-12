@@ -20,7 +20,7 @@
                             </div>
                             <div class="absolute bottom-0 px-1 bg-gray-100">
                                 <template v-for="tagName, i in article.tags">
-                                    <button class="uppercase text-xs" @click="switchPanel.maximizeTopRight(), $router.push(`/search/${tagName}`)">
+                                    <button class="uppercase text-xs" @click="switchPanel.maximizeHeadPanel(), $router.push(`/search/${tagName}`)">
                                         {{ tagName }} >>
                                     </button>
                                     <span class="px-3" v-if="i < article.tags.length - 1">|</span>

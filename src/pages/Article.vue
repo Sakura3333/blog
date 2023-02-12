@@ -92,12 +92,10 @@ const init = () => {
     }
 }
 // 通过路由跳文章界面
-watch([() => route.params.fid, () => globalData.articles], ([old1, old2], [val1, val2]) => {
-    if (old1 != val1 && old2.length > 0) {
-        init();
-    } else if (old2 != val2) {
-        init();
-    }
+watch([() => route.params.fid, () => globalData.articles], () => {
+    if (globalData.articles.length > 0) init();
+}, {
+    deep: true
 });
 
 init();

@@ -34,6 +34,15 @@ module.exports = {
       },
       backdropBlur: {
         xs: '2px'
+      },
+      backgroundSize: {
+        '2rate': '200%',
+        'h-2rate': '100% 200%',
+        'w-2rate': '200% 100%'
+      },
+      aspectRatio: {
+        '1x4': '1 / 4',
+        '2x7': '2 / 7',
       }
     }
   },

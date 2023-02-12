@@ -20,7 +20,7 @@
                     <template v-for="article in searchResult">
                         <router-link class=" p-2 block overflow-hidden
                             hover:bg-gray-100 " :to="`/article/${article.fid}`"
-                            @click="switchPanel.maximizeBottomRight()">
+                            @click="switchPanel.maximizeBodyPanel()">
                             <div class="flex flex-nowrap justify-between items-end">
                                 <span class="whitespace-nowrap text-ellipsis overflow-hidden">
                                     {{ article.title }}
@@ -75,7 +75,7 @@ const search = (keywords: string, fields: string[] = ['title', 'brief', 'tags'])
 }
 
 watch(() => route.params, (val) => {
-    val.keywords && search(val.keywords as string, ['tags']);
+    if (val.keywords) search(val.keywords as string, ['tags']);
 });
 
 </script>

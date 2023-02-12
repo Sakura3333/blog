@@ -20,15 +20,6 @@
     }
 }
 
-@layer components {
-    .slide-subpanel {
-        @apply w-1/2 h-1/2 relative flex-shrink-0 overflow-hidden;
-    }
-    .maximize-btn {
-        @apply bg-gray-800 text-white border-0 hover:bg-slate-600 px-1 absolute z-50;
-    }
-}
-
 @layer utilities {
     .disable-event {
         @apply blur-sm pointer-events-none;
