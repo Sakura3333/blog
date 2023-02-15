@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="flex justify-end space-x-2 px-2 z-10">
-                    <button @click="switchPanel.maximizeHeadPanel(), $router.push('/music')">
+                    <button @click="switchPanel.maximizeHeadPanel(), $router.push('/music1')">
                         <font-awesome-icon icon="fa-solid fa-headphones-simple" />
                     </button>
                     <button @click="switchPanel.maximizeHeadPanel(), $router.push('/search')">
