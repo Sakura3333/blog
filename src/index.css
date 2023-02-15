@@ -18,6 +18,17 @@
     ::-webkit-scrollbar-thumb {
         background: lightgray;
     }
+    .hide-scrollbar::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
+    .hide-scrollbar {
+        overflow: -moz-scrollbars-none;
+        -ms-overflow-style: none;
+    }
+    .text-shadow {
+        text-shadow: -.2rem -.2rem 1rem black, .2rem .2rem 1rem black;
+    }
 }
 
 @layer utilities {

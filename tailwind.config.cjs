@@ -25,6 +25,9 @@ module.exports = {
         '2rate': '200%',
         '3/8': '37.5%'
       },
+      margin: {
+        '1/2': "50%"
+      },
       transitionDuration: {
         1200: '1200ms',
         1400: '1400ms',
@@ -42,7 +45,7 @@ module.exports = {
       },
       aspectRatio: {
         '1x4': '1 / 4',
-        '2x7': '2 / 7',
+        '3x7': '3 / 7',
       }
     }
   },
