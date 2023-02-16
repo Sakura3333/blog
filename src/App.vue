@@ -2,7 +2,7 @@
     <defalut-layout-vue>
 
         <!-- 侧边栏 -->
-        <template #asidePanel="{ switchPanel }">
+        <template #bodyPanelNav="{ switchPanel }">
             <ul class="pr-1 text-center font-modul h-full flex flex-col justify-center bg-transparent">
                 <template v-for="route in $router.getRoutes()">
                     <template v-if="route.meta.show">
@@ -12,42 +12,61 @@
             </ul>
         </template>
 
-        <!-- 工具栏 -->
+        <!-- HeadPanel -->
         <template #headPanel="{ panelState, switchPanel }">
-
-            <div class="h-full flex flex-col justify-between">
-
-                <div class="flex-grow h-0">
-
-                    <!-- 当前路由视图 -->
-                    <router-view :route="!panelState[Panel.HEADPANEL].maximized && panelState[Panel.HEADPANEL].curRoute || undefined"
-                        :name="Panel.HEADPANEL" #="{ Component }" :switchPanel="switchPanel">
-                        <keep-alive :exclude="routerViewExclude">
-                            <component :is="Component"></component>
-                        </keep-alive>
-                    </router-view>
-
-                </div>
-
-                <div class="flex justify-end space-x-2 px-2 z-10">
-                    <button @click="switchPanel.maximizeHeadPanel(), $router.push('/music1')">
+            <!-- 当前路由视图 -->
+            <router-view
+                :route="!panelState[Panel.HEADPANEL].maximized && panelState[Panel.HEADPANEL].curRoute || undefined"
+                :name="Panel.HEADPANEL" #="{ Component }" :switchPanel="switchPanel">
+                <keep-alive :exclude="routerViewExclude">
+                    <component :is="Component"></component>
+                </keep-alive>
+            </router-view>
+        </template>
+        <!-- HeadPanelNav -->
+        <template #headPanelNav="{ switchPanel }">
+            <div class="w-full h-full flex justify-end">
+                <div class="max-w-full h-full flex justify-start items-stretch text-lg overflow-auto hide-scrollbar">
+                    <button class="aspect-suqare px-3" @click="switchPanel.maximizeHeadPanel(), $router.push('/music1')">
                         <font-awesome-icon icon="fa-solid fa-headphones-simple" />
                     </button>
-                    <button @click="switchPanel.maximizeHeadPanel(), $router.push('/search')">
+                    <button class="aspect-suqare px-3" @click="switchPanel.maximizeHeadPanel(), $router.push('/search')">
                         <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                     </button>
-                    <a href="https://github.com/Sakura3333" target="_blank">
+                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
                         <font-awesome-icon icon="fa-brands fa-github" />
                     </a>
-                </div>
-            </div>
-
+                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
+                        <font-awesome-icon icon="fa-brands fa-github" />
+                    </a>
+                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
+                        <font-awesome-icon icon="fa-brands fa-github" />
+                    </a>
+                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
+                        <font-awesome-icon icon="fa-brands fa-github" />
+                    </a>
+                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
+                        <font-awesome-icon icon="fa-brands fa-github" />
+                    </a>
+                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
+                        <font-awesome-icon icon="fa-brands fa-github" />
+                    </a>
+                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
+                        <font-awesome-icon icon="fa-brands fa-github" />
+                    </a>
+                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
+                        <font-awesome-icon icon="fa-brands fa-github" />
+                    </a>
+                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
+                        <font-awesome-icon icon="fa-brands fa-github" />
+                    </a>
+                </div> 
+            </div>      
         </template>
 
         <!-- 页面主要内容 -->
         <template #bodyPanel="{ panelState, switchPanel }">
             <div class="h-full overflow-hidden" :class="{ 'disable-event': !panelState[Panel.BODYPANEL].maximized }">
-
                 <!-- 当前路由视图 -->
                 <router-view :route="!panelState[Panel.BODYPANEL].maximized && panelState[Panel.BODYPANEL].curRoute || undefined"
                     :name="Panel.BODYPANEL" #="{ Component }" :switchPanel="switchPanel">
@@ -59,7 +78,6 @@
                         </component>
                     </keep-alive>
                 </router-view>
-
             </div>
 
         </template>

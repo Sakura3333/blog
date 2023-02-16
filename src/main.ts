@@ -76,7 +76,9 @@ import {
   faVolumeLow,
   faVolumeHigh,
   faRecordVinyl,
-  faPenToSquare
+  faPenToSquare,
+  faBars,
+  faArrowDown
 } from '@fortawesome/free-solid-svg-icons';
 import { 
   faWeixin, 
@@ -96,6 +98,7 @@ library.add(
   faFireFlameSimple, 
   faXmark, 
   faArrowUp, 
+  faArrowDown, 
   faWeixin, 
   faWeibo, 
   faQq, 
@@ -119,7 +122,8 @@ library.add(
   faVolumeLow,
   faVolumeHigh,
   faRecordVinyl,
-  faPenToSquare
+  faPenToSquare,
+  faBars
 );
 
 const app = createApp(App);

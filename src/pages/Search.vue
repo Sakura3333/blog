@@ -1,5 +1,5 @@
 <template>
-    <div class="absolute w-full h-full p-2 pb-7 flex flex-col justify-center">
+    <div class="h-full p-2 pb-7 flex flex-col justify-center">
         <div class="w-full max-h-full max-w-xl mx-auto flex flex-col">
             <div class="flex">
                 <input type="text" class="w-full border px-2 py-1 outline-none focus:border-black border-r-0"

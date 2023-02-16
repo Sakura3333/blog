@@ -1,6 +1,8 @@
 enum Panel {
     HEADPANEL = 'headPanel',
-    BODYPANEL = 'bodyPanel'
+    BODYPANEL = 'bodyPanel',
+    HEADPANEL_NAV = 'headPanelNav',
+    BODYPANEL_NAV = 'bodyPanelNav'
 }
 
 
