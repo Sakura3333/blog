@@ -1,7 +1,7 @@
 <template>
     <page-layout-vue>
         <template #topbar>
-            <span class="uppercase">moods{{ globalData.moods.length }}</span>
+            <span class="uppercase space-x-1"><font-awesome-icon icon="fa-solid fa-paragraph" /><span>{{ globalData.moods.length }}</span></span>
             <span>闇の炎に抱かれて消えろっ!</span>
         </template>
         <template #content>

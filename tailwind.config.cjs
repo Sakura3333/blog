@@ -2,6 +2,7 @@
 module.exports = {  
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   darkMode: 'media', // 'media' or 'class'
+safelist: ['v'],
   theme: {
     extend: {
       minWidth: ({ theme }) => ({

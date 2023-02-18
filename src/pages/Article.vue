@@ -1,11 +1,14 @@
 <template>
     <page-layout-vue>
         <template #topbar>
-            <div class="space-x-2 flex-shrink-0">
-                <span>WORDS{{ state.words }}</span>
-                <span><font-awesome-icon icon="fa-regular fa-eye" /></span>
+            <div class="space-x-3 flex-shrink-0">
+                <span class="space-x-1"><font-awesome-icon icon="fa-solid fa-w" /><span>{{ state.words }}</span></span>
+                <span :id="$route.path" class="leancloud_visitors space-x-1" data-flag-title="Your Article Title">
+                    <font-awesome-icon icon="fa-regular fa-eye" />
+                    <i class="leancloud-visitors-count"></i>
+                </span>
             </div>
-            <div class="flex-grow overflow-hidden px-2 whitespace-nowrap text-ellipsis">
+            <div class="flex-grow overflow-hidden px-3 whitespace-nowrap text-ellipsis">
                 <span>{{ state.title }}</span>
             </div>
             <router-link class="flex-shrink-0 -mr-2 px-2" to="/index">
@@ -13,7 +16,10 @@
             </router-link>
         </template>
         <template #content>
-            <div class="mx-auto max-w-3xl" v-html="state.html"></div>
+            <div class="!mx-auto max-w-3xl markdown-body !text-sm !leading-6" v-html="state.html"></div>
+            <div class="!mx-auto max-w-3xl mt-5">
+                <slot name="valine"></slot>
+            </div>
         </template>
         <template #footbar>
             <div class="space-x-2">
@@ -32,10 +38,6 @@
                     <button :class="{ 'text-gray-500 pointer-events-none': state.nextArticle == null }"
                         @click="navigate"><font-awesome-icon icon="fa-solid fa-chevron-right" /></button>
                 </router-link>
-            </div>
-            <div :class="state.showComments ? 'top-0 -translate-y-full' : 'top-full'"
-                class="bg-gray-100 flex flex-col overflow-auto absolute w-full max-w-xl h-96 left-0 duration-150">
-                <slot name="valine"></slot>
             </div>
         </template>
     </page-layout-vue>

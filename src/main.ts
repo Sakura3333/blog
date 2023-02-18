@@ -5,7 +5,10 @@ import Router from './router/index';
 // tailwind样式表
 import './index.css';
 
-// markdown引擎配置
+// markdown样式
+import "github-markdown-css/github-markdown-light.css";
+
+// marked配置
 import { marked } from 'marked';
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -78,7 +81,10 @@ import {
   faRecordVinyl,
   faPenToSquare,
   faBars,
-  faArrowDown
+  faArrowDown,
+  faW,
+  faParagraph,
+  faFeather
 } from '@fortawesome/free-solid-svg-icons';
 import { 
   faWeixin, 
@@ -123,7 +129,10 @@ library.add(
   faVolumeHigh,
   faRecordVinyl,
   faPenToSquare,
-  faBars
+  faBars,
+  faW,
+  faParagraph,
+  faFeather
 );
 
 const app = createApp(App);

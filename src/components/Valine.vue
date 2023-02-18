@@ -8,13 +8,13 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const valine = ref<Valine>();
-
 const initValine = () => {
     valine.value = new Valine({
         el: '#vcomments',
         path: route.path,
         appId: 'pDEVG0gjKlnWIJYEyMCoCRfl-gzGzoHsz',
-        appKey: 'cCjERroUEaFKu1ZD5SW8Wx6f'
+        appKey: 'cCjERroUEaFKu1ZD5SW8Wx6f',
+        visitor: true
     });
 }
 

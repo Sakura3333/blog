@@ -5,7 +5,10 @@
             <span>闇の炎に抱かれて消えろっ!</span>
         </template>
         <template #content>
-            <div class="max-w-3xl mx-auto">
+            <div class="h-96 bg-black">
+
+            </div>
+            <div class="max-w-3xl mx-auto mt-5">
                 <slot name="valine"></slot>
             </div>
         </template>

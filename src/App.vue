@@ -26,37 +26,13 @@
         <!-- HeadPanelNav -->
         <template #headPanelNav="{ switchPanel }">
             <div class="w-full h-full flex justify-end">
-                <div class="max-w-full h-full flex justify-start items-stretch text-lg overflow-auto hide-scrollbar">
+                <div class="max-w-full h-full flex justify-start items-stretch overflow-auto hide-scrollbar">
                     <button class="aspect-suqare px-3" @click="switchPanel.maximizeHeadPanel(), $router.push('/music1')">
                         <font-awesome-icon icon="fa-solid fa-headphones-simple" />
                     </button>
                     <button class="aspect-suqare px-3" @click="switchPanel.maximizeHeadPanel(), $router.push('/search')">
                         <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                     </button>
-                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
-                        <font-awesome-icon icon="fa-brands fa-github" />
-                    </a>
-                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
-                        <font-awesome-icon icon="fa-brands fa-github" />
-                    </a>
-                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
-                        <font-awesome-icon icon="fa-brands fa-github" />
-                    </a>
-                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
-                        <font-awesome-icon icon="fa-brands fa-github" />
-                    </a>
-                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
-                        <font-awesome-icon icon="fa-brands fa-github" />
-                    </a>
-                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
-                        <font-awesome-icon icon="fa-brands fa-github" />
-                    </a>
-                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
-                        <font-awesome-icon icon="fa-brands fa-github" />
-                    </a>
-                    <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
-                        <font-awesome-icon icon="fa-brands fa-github" />
-                    </a>
                     <a class="flex items-center text-center aspect-suqare px-3" href="https://github.com/Sakura3333" target="_blank">
                         <font-awesome-icon icon="fa-brands fa-github" />
                     </a>

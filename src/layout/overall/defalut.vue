@@ -1,6 +1,6 @@
 <template>
     <!-- style="background: url(https://s1.ax1x.com/2022/12/30/pS9FLi4.jpg) center no-repeat; background-size: cover;" -->
-    <div class="fixed w-full h-full overflow-hidden text-sm flex flex-row select-none" v-swip>
+    <div class="fixed w-full h-full overflow-hidden flex flex-row select-none text-sm" v-swip>
         <!-- 页面导航 -->
         <div class="h-full flex-shrink-0 border-r duration-300 bg-h-2rate -translate-x-full absolute z-50 md:static md:translate-x-0"
             :class="{'-translate-x-0': showBodyPanelNav}"
@@ -32,12 +32,12 @@
                         <slot :name="Panel.HEADPANEL" :="{ panelState, switchPanel }"></slot>
                     </div>
                     <!-- 工具条 -->
-                    <div class="flex flex-shrink-0 text-lg" :style="`height: ${customize.layout.toolBarHeight}`">
+                    <div class="flex flex-shrink-0" :style="`height: ${customize.layout.toolBarHeight}`">
                         <button class="aspect-square px-3 md:hidden" @click="showBodyPanelNav = !showBodyPanelNav">
                             <font-awesome-icon icon="fa-solid fa-bars" />
                         </button>
                         <button class="aspect-square px-3 md:hidden" @click="switchPanelByBtn()">
-                            <font-awesome-icon :icon="`fa-solid ${ (panelState[Panel.BODYPANEL].maximized && 'fa-arrow-up') || (panelState[Panel.HEADPANEL].maximized && 'fa-arrow-down') }`" />
+                            <font-awesome-icon class="animate-bounce" :icon="`fa-solid ${ (panelState[Panel.BODYPANEL].maximized && 'fa-arrow-down') || (panelState[Panel.HEADPANEL].maximized && 'fa-arrow-up') }`" />
                         </button>
                         <div class="flex-grow w-0">
                             <slot :name="Panel.HEADPANEL_NAV" :="{ panelState, switchPanel }"></slot>

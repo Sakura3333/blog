@@ -31,6 +31,52 @@
     }
 }
 
+@layer components{
+    /* valine美化 */
+    .v {
+        @apply !border-l border-dashed ml-5;
+    }
+    .v div {
+        @apply !px-0 !border-0;
+    }
+    .v .vimg {
+        @apply -translate-x-1/2 !-mr-1/2 !p-0 !w-10 !h-10 !mt-2;
+    }
+    .v .vquote .vimg {
+        @apply !w-9 !h-9 !mt-0;
+    }
+    .v .vh {
+        @apply !pl-5 !ml-2;
+    }
+    .v .vcards>.vcard {
+        @apply !p-0 !mt-5 !border !border-l-0 !border-dashed rounded-tr rounded-br;
+        @apply hover:bg-sky-50
+    }
+    .v .vcard .vwrap {
+        @apply !border !px-2 !-ml-5 !mr-2;
+    }
+    .v .vcard .vmeta .vat {
+        @apply mr-2;
+    }
+    .v .vpanel {
+        @apply relative;
+        @apply after:absolute after:w-10 after:h-10 after:top-0 after:left-0 after:-translate-x-1/2 after:!mt-2;
+        @apply after:bg-white after:rounded-full after:border;
+        @apply after:flex after:justify-center after:items-center after:text-lg;
+        
+    }
+    .v .vpanel::after {
+        content: "🖊";
+    }
+    .v .vpanel .vwrap {
+        @apply !pl-5 !pr-2 !border !border-l-0 !border-dashed rounded-none rounded-tr rounded-br;
+    }
+    .v .vcount,
+    .v .vpower {
+        @apply !hidden;
+    }
+}
+
 @layer utilities {
     .disable-event {
         @apply blur-sm pointer-events-none;

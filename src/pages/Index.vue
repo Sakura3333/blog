@@ -1,7 +1,7 @@
 <template>
     <page-layout-vue>
         <template #topbar>
-            <span class="uppercase">articles{{ globalData.articles.length }}</span>
+            <span class="space-x-1"><font-awesome-icon icon="fa-solid fa-feather" /><span>{{ globalData.articles.length }}</span></span>
             <span>闇の炎に抱かれて消えろっ!</span>
         </template>
         <template #content>
