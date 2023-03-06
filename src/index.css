@@ -63,10 +63,7 @@
         @apply after:absolute after:w-10 after:h-10 after:top-0 after:left-0 after:-translate-x-1/2 after:!mt-2;
         @apply after:bg-white after:rounded-full after:border;
         @apply after:flex after:justify-center after:items-center after:text-lg;
-        
-    }
-    .v .vpanel::after {
-        content: "🖊";
+        @apply after:content-['🖊'];
     }
     .v .vpanel .vwrap {
         @apply !pl-5 !pr-2 !border !border-l-0 !border-dashed rounded-none rounded-tr rounded-br;
@@ -78,10 +75,16 @@
 }
 
 @layer utilities {
+    .write-mode-x-tb {
+        writing-mode: horizontal-tb;
+    }
+    .write-mode-y-lr {
+        writing-mode: vertical-lr;
+    }
+    .write-mode-y-rl {
+        writing-mode: vertical-rl;
+    }
     .disable-event {
         @apply blur-sm pointer-events-none;
-    }
-    .backdrop-card>.card-content {
-        @apply bg-white px-2 absolute w-full h-full top-0 left-0 flex justify-center items-center;
     }
 }

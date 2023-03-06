@@ -3,7 +3,7 @@
         <div class="flex justify-between items-center px-2 bg-gray-100 z-50">
             <slot name="topbar"></slot>
         </div>
-        <div ref="content" class="flex-grow w-full p-2 overflow-auto delay-300">
+        <div ref="scrollContainer" class="flex-grow w-full p-2 overflow-auto delay-300">
             <slot name="content"></slot>
         </div>
         <div class="w-full flex flex-row justify-between items-center px-2 bg-gray-100 relative z-50">
@@ -16,10 +16,11 @@
 <script setup lang="ts">
 import {ref} from "vue";
 // 返回顶部
-const content = ref<HTMLElement>();
+const scrollContainer = ref<HTMLElement>();
 const backtop = () => {
-    content.value?.scrollTo({
-        top: 0
+    scrollContainer.value?.scrollTo({
+        top: 0,
+        behavior: "smooth"
     });
 }
 </script>

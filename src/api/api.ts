@@ -6,7 +6,7 @@ export enum Conf {
  * 读取json配置文件
  */
 export function getConf(conf: Conf, callback: Function) {
-    fetch(`../conf/${conf}.json`).then(res => {
+    fetch(`/conf/${conf}.json`).then(res => {
         res.json().then(data => {
             callback(data);
         });
@@ -16,8 +16,8 @@ export function getConf(conf: Conf, callback: Function) {
 /**
  * 读取md文件
  */
-export function getMdContent(fid: string, callback: Function) {
-    fetch(`../md/${fid}.md`).then(res => {
+export function getMdContent(date: Array<string>, fid: string, callback: Function) {
+    fetch(`/md/${date.join('/')}/${fid}.md`).then(res => {
         res.text().then(data => {
             callback(data);
         });

@@ -28,7 +28,7 @@ const routes: RouteRecordRaw[] = [
             panel: Panel.BODYPANEL
         }
     },{
-        path: "/article/:fid",
+        path: "/article/:date(\\d+)+/:fid",
         name: 'article', 
         components: {
             [Panel.BODYPANEL]: article

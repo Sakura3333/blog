@@ -14,6 +14,7 @@ export interface ContentMapperRecord {
     title: string,
     brief: string,
     author: string,
+    date: string,
     time: string,
     tags: string[],
     schema: 1|2

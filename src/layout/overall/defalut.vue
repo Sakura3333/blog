@@ -1,8 +1,8 @@
 <template>
     <!-- style="background: url(https://s1.ax1x.com/2022/12/30/pS9FLi4.jpg) center no-repeat; background-size: cover;" -->
-    <div class="fixed w-full h-full overflow-hidden flex flex-row select-none text-sm" v-swip>
+    <div class="fixed w-full h-full overflow-hidden flex flex-row">
         <!-- 页面导航 -->
-        <div class="h-full flex-shrink-0 border-r duration-300 bg-h-2rate -translate-x-full absolute z-50 md:static md:translate-x-0"
+        <div class="h-full flex-shrink-0 border-r duration-300 bg-h-2rate -translate-x-full absolute z-50 md:z-0 md:static md:translate-x-0"
             :class="{'-translate-x-0': showBodyPanelNav}"
             style="background-image: linear-gradient(black 50%, white 50%);" :style="{
                 'width': customize.layout.asideWidth,
@@ -14,16 +14,11 @@
             </div>
         </div>
         <!-- 小屏下的遮罩，点击隐藏侧边栏 -->
-        <button class="absolute h-2rate w-full top-0 left-0 bg-black bg-opacity-50 z-40 md:hidden" @click="showBodyPanelNav = false" v-show="showBodyPanelNav"></button>
+        <button class="absolute h-2rate w-full top-0 left-0 bg-black bg-opacity-50 z-40 md:hidden md:z-0" @click="showBodyPanelNav = false" v-show="showBodyPanelNav"></button>
         <!-- 面板容器 -->
         <div class="relative flex-grow w-0 h-2rate duration-300"
             :style="panelState[Panel.BODYPANEL].maximized ? `top:${customize.layout.toolBarHeight};transform:translateY(-50%)` :
             (panelState[Panel.HEADPANEL].maximized ? `top:-${customize.layout.toolBarHeight};transform:translateY(0)` : '')">
-            <!-- Logo -->
-            <div class="absolute h-1/2 top-0 left-0 -translate-x-full border-b pointer-events-none text-xl flex flex-col justify-end items-center text-white"
-                :style="{ width: customize.layout.asideWidth }">
-                Logo
-            </div>
             <!-- 工具 -->
             <div class="h-1/2 overflow-hidden border-b" :style="`padding-top: ${customize.layout.toolBarHeight};`">
                 <div class="h-full flex flex-col justify-between">
@@ -32,13 +27,21 @@
                         <slot :name="Panel.HEADPANEL" :="{ panelState, switchPanel }"></slot>
                     </div>
                     <!-- 工具条 -->
-                    <div class="flex flex-shrink-0" :style="`height: ${customize.layout.toolBarHeight}`">
-                        <button class="aspect-square px-3 md:hidden" @click="showBodyPanelNav = !showBodyPanelNav">
-                            <font-awesome-icon icon="fa-solid fa-bars" />
-                        </button>
-                        <button class="aspect-square px-3 md:hidden" @click="switchPanelByBtn()">
-                            <font-awesome-icon class="animate-bounce" :icon="`fa-solid ${ (panelState[Panel.BODYPANEL].maximized && 'fa-arrow-down') || (panelState[Panel.HEADPANEL].maximized && 'fa-arrow-up') }`" />
-                        </button>
+                    <div class="flex flex-shrink-0 items-stretch" :style="`height: ${customize.layout.toolBarHeight}`">
+                        <div class="flex-shrink-0">
+                            <button class="h-full px-3 md:hidden" @click="showBodyPanelNav = !showBodyPanelNav">
+                                <font-awesome-icon icon="fa-solid fa-bars" />
+                            </button>
+                            <button class="h-full px-3" @click="switchPanelByBtn()">
+                                <font-awesome-icon class="animate-bounce" :icon="`fa-solid ${ (panelState[Panel.BODYPANEL].maximized && 'fa-arrow-down') || (panelState[Panel.HEADPANEL].maximized && 'fa-arrow-up') }`" />
+                            </button>
+                        </div>
+                        <!-- Logo -->
+                        <div class="md:absolute md:-translate-y-full md:-translate-x-full md:border-b md:top-1/2 md:left-0 md:p-0 px-3 md:text-white w-max pointer-events-none text-xl flex flex-col justify-center items-center"
+                            :class="`md:w-[${customize.layout.asideWidth}] md:h-[${customize.layout.toolBarHeight}]`"
+                            >
+                            Logo
+                        </div>
                         <div class="flex-grow w-0">
                             <slot :name="Panel.HEADPANEL_NAV" :="{ panelState, switchPanel }"></slot>
                         </div>
@@ -63,12 +66,14 @@ import { RouteLocationNormalized, useRouter } from 'vue-router';
 const customize = reactive<{
     layout: {
         toolBarHeight: string | number,
-        asideWidth: string | number
+        asideWidth: string | number,
+        safeClass: string[]
     },
 }>({
     layout: {
         toolBarHeight: '3rem',
-        asideWidth: '12rem'
+        asideWidth: '12rem',
+        safeClass: ['md:h-[3rem]', 'md:w-[12rem]']
     },
 });
 
@@ -151,34 +156,4 @@ function switchPanelByBtn() {
         }
     }
 }
-/**
- * 通过手势切换面板
- */
-let mousedownY = 0
-function swipHandler(e: MouseEvent) {
-    if (e.pageY - mousedownY > 60 && !panelState[Panel.HEADPANEL].maximized) {
-        switchPanel.maximizeHeadPanel();
-        if (panelState[Panel.HEADPANEL].curRoute) {
-            router.replace(panelState[Panel.HEADPANEL].curRoute);
-        }
-    }
-    if (e.pageY - mousedownY < -60 && !panelState[Panel.BODYPANEL].maximized) {
-        switchPanel.maximizeBodyPanel();
-        if (panelState[Panel.BODYPANEL].curRoute) {
-            router.replace(panelState[Panel.BODYPANEL].curRoute);
-        }
-    }
-}
-const vSwip = {
-    mounted: (el: HTMLElement) => {
-        el.addEventListener('mousedown', (e: MouseEvent) => {
-            mousedownY = e.clientY;
-            el.addEventListener('mousemove', swipHandler);
-        });
-        el.addEventListener('mouseup', () => {
-            el.removeEventListener('mousemove', swipHandler);
-        });
-    }
-}
-
 </script>

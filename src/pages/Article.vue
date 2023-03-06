@@ -16,25 +16,26 @@
             </router-link>
         </template>
         <template #content>
-            <div class="!mx-auto max-w-3xl markdown-body !text-sm !leading-6" v-html="state.html"></div>
+            <div class="!mx-auto max-w-3xl mb-5 rounded overflow-hidden border">
+                <img class="aspect-video" :src="state.curArticle?.imgs[0]" alt="">
+            </div>
+            <markdown-view class="!mx-auto max-w-3xl markdown-body !text-sm !leading-6" :html="state.html"></markdown-view>
             <div class="!mx-auto max-w-3xl mt-5">
                 <slot name="valine"></slot>
             </div>
         </template>
         <template #footbar>
             <div class="space-x-2">
-                <button @click="state.showComments = !state.showComments"><font-awesome-icon
-                        icon="fa-regular fa-comment" /></button>
                 <button><font-awesome-icon icon="fa-brands fa-weixin" /></button>
                 <button><font-awesome-icon icon="fa-brands fa-weibo" /></button>
                 <button><font-awesome-icon icon="fa-brands fa-qq" /></button>
             </div>
             <div class="space-x-2">
-                <router-link custom #="{ navigate }" :to="`/article/${state.preArticle?.fid}`">
+                <router-link custom #="{ navigate }" :to="`/article/${state.preArticle?.date}/${state.preArticle?.fid}`">
                     <button :class="{ 'text-gray-500 pointer-events-none': state.preArticle == null }"
                         @click="navigate"><font-awesome-icon icon="fa-solid fa-chevron-left" /></button>
                 </router-link>
-                <router-link custom #="{ navigate }" :to="`/article/${state.nextArticle?.fid}`">
+                <router-link custom #="{ navigate }" :to="`/article/${state.nextArticle?.date}/${state.nextArticle?.fid}`">
                     <button :class="{ 'text-gray-500 pointer-events-none': state.nextArticle == null }"
                         @click="navigate"><font-awesome-icon icon="fa-solid fa-chevron-right" /></button>
                 </router-link>
@@ -50,7 +51,8 @@ export default {
 
 <script setup lang="ts">
 import pageLayoutVue from '../layout/page/default.vue';
-import { reactive, getCurrentInstance, inject, watch } from 'vue';
+import markdownView from '../components/MarkdownView.vue';
+import { reactive, ref, getCurrentInstance, onMounted, inject, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { getMdContent } from '../api/api';
 import { ContentMapperRecord, DataSet } from '../model/conf';
@@ -63,23 +65,24 @@ const state = reactive<{
     title: string,
     index: number,
     html: string,
+    curArticle: ContentMapperRecord | null,
     preArticle: ContentMapperRecord | null,
     nextArticle: ContentMapperRecord | null,
-    showComments: boolean
 }>({
     words: 0,
     title: '',
     index: -1,
     html: '',
+    curArticle: null,
     preArticle: null,
     nextArticle: null,
-    showComments: false
 });
 // 初始化文章信息
 const init = () => {
     if (route.params.fid && globalData.articles.length > 0) {
         for (let i = 0; i < globalData.articles.length; i++) {
             if (globalData.articles[i].fid === route.params.fid) {
+                state.curArticle = globalData.articles[i];
                 state.index = i;
                 state.title = globalData.articles[i].title;
                 break;
@@ -87,14 +90,15 @@ const init = () => {
         }
         state.preArticle = state.index ? globalData.articles[state.index - 1] : null;
         state.nextArticle = state.index < globalData.articles.length ? globalData.articles[state.index + 1] : null;
-        getMdContent(route.params.fid as string, (data: string) => {
+        getMdContent(route.params.date as Array<string>, route.params.fid as string, (data: string) => {
             state.html = proxy.marked.parse(data);
             state.words = data.length;
         });
     }
 }
 // 通过路由跳文章界面
-watch([() => route.params.fid, () => globalData.articles], () => {
+watch([() => route.params.fid, () => route.params.date, () => globalData.articles], () => {
+    console.log(route.params);
     if (globalData.articles.length > 0) init();
 }, {
     deep: true
