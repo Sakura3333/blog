@@ -1,16 +1,5 @@
 [
     {
-        "fid": "daily",
-        "imgs": ["https://s1.ax1x.com/2023/03/06/ppZCMYF.png"],
-        "title": "浏览器任务与渲染",
-        "brief": "",
-        "author": "",
-        "date": "2023/03/07",
-        "time": "21:27",
-        "tags": ["learn"],
-        "schema": 1
-    },
-    {
         "fid": "mood",
         "imgs": [],
         "title": "",
