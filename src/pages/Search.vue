@@ -19,7 +19,7 @@
                 <div class="space-y-1">
                     <template v-for="article in searchResult">
                         <router-link class=" p-2 block overflow-hidden
-                            hover:bg-gray-100 " :to="`/article/${article.fid}`"
+                            hover:bg-gray-100 " :to="`/article/${article.date}/${article.fid}`"
                             @click="switchPanel.maximizeBodyPanel()">
                             <div class="flex flex-nowrap justify-between items-end">
                                 <span class="whitespace-nowrap text-ellipsis overflow-hidden">
