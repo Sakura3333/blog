@@ -52,7 +52,7 @@ export default {
 <script setup lang="ts">
 import pageLayoutVue from '../layout/page/default.vue';
 import markdownView from '../components/MarkdownView.vue';
-import { reactive, ref, getCurrentInstance, onMounted, inject, watch } from 'vue';
+import { reactive, getCurrentInstance, inject, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { getMdContent } from '../api/api';
 import { ContentMapperRecord, DataSet } from '../model/conf';
@@ -78,33 +78,39 @@ const state = reactive<{
     nextArticle: null,
 });
 // 初始化文章信息
-const init = () => {
-    if (route.params.fid && globalData.articles.length > 0) {
-        for (let i = 0; i < globalData.articles.length; i++) {
-            if (globalData.articles[i].fid === route.params.fid) {
-                state.curArticle = globalData.articles[i];
-                state.index = i;
-                state.title = globalData.articles[i].title;
-                break;
+const loadArticle = () => {
+    if (globalData.articles.length > 0 && route.params.fid && route.params.date) {
+        const urlFid = route.params.fid;
+        const urlDate = (route.params.date as Array<string>).join("");
+        if (urlFid && urlDate.length > 0) {
+            for (let i = 0; i < globalData.articles.length; i++) {
+                const article = globalData.articles[i];
+                if (article.fid === urlFid && article.date.replace(/(\/|\.|-)/g, "") === urlDate) {
+                    state.curArticle = article;
+                    state.index = i;
+                    state.title = article.title;
+                    break;
+                }
             }
+            state.preArticle = state.index ? globalData.articles[state.index - 1] : null;
+            state.nextArticle = state.index < globalData.articles.length ? globalData.articles[state.index + 1] : null;
+            getMdContent(route.params.date as Array<string>, route.params.fid as string, (data: string) => {
+                state.html = proxy.marked.parse(data);
+                state.words = data.length;
+            });
         }
-        state.preArticle = state.index ? globalData.articles[state.index - 1] : null;
-        state.nextArticle = state.index < globalData.articles.length ? globalData.articles[state.index + 1] : null;
-        getMdContent(route.params.date as Array<string>, route.params.fid as string, (data: string) => {
-            state.html = proxy.marked.parse(data);
-            state.words = data.length;
-        });
     }
 }
-// 通过路由跳文章界面
-watch([() => route.params.fid, () => route.params.date, () => globalData.articles], () => {
-    console.log(route.params);
-    if (globalData.articles.length > 0) init();
-}, {
+// 通过路由跳转文章界面
+watch([
+    () => route.params.fid,
+    () => route.params.date,
+    () => globalData.articles],
+    loadArticle, {
     deep: true
 });
 
-init();
+loadArticle();
 
 </script>
 

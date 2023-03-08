@@ -1,9 +1,9 @@
 <template>
     <div class="h-full flex flex-col">
-        <div class="flex justify-between items-center px-2 bg-gray-100 z-50">
+        <div class="flex justify-between items-center px-2 bg-gray-100 z-50 relative">
             <slot name="topbar"></slot>
         </div>
-        <div ref="scrollContainer" class="flex-grow w-full p-2 overflow-auto delay-300">
+        <div ref="scrollContainer" class="flex-grow w-full p-2 overflow-auto delay-300 relative">
             <slot name="content"></slot>
         </div>
         <div class="w-full flex flex-row justify-between items-center px-2 bg-gray-100 relative z-50">
